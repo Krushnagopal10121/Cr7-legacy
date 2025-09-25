@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CR7 Legacy - Club Journey</title>
+    <meta name="description" content="Follow Cristiano Ronaldo's legendary club journey through six transformative chapters from Sporting CP to Al Nassr, celebrating triumphs and evolution." />
+    <link rel="stylesheet" href="../css/main.css" />
+    <style>
+        /* Timeline Navigation Styles */
+        .timeline-nav {
+            background: linear-gradient(90deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.6) 50%, rgba(0,0,0,0.8) 100%);
+            backdrop-filter: blur(10px);
+        }
+        
+        .club-badge {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+        
+        .club-badge.active {
+            transform: scale(1.2);
+            filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.6));
+        }
+        
+        .club-badge:hover {
+            transform: scale(1.1);
+            filter: brightness(1.2);
+        }
+        
+        /* Club Section Animations */
+        .club-section {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease-out;
+        }
+        
+        .club-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Achievement Card Hover Effects */
+        .achievement-card {
+            transition: all 0.3s ease;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .achievement-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            border-color: rgba(212, 175, 55, 0.5);
+        }
+        
+        /* Video Overlay Styles */
+        .video-modal {
+            backdrop-filter: blur(15px);
+            background: rgba(0, 0, 0, 0.9);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s ease;
+        }
+        
+        .video-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        /* Progress Bar */
+        .progress-bar {
+            height: 4px;
+            background: linear-gradient(90deg, #D4AF37 0%, #FBBF24 50%, #D4AF37 100%);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+        
+        /* Club Color Themes */
+        .sporting-theme { background: linear-gradient(135deg, #006633 0%, #004d26 100%); }
+        .united-theme { background: linear-gradient(135deg, #DC2626 0%, #991B1B 100%); }
+        .madrid-theme { background: linear-gradient(135deg, #FFFFFF 0%, #F3F4F6 100%); color: #1F2937; }
+        .juventus-theme { background: linear-gradient(135deg, #000000 0%, #1F2937 100%); }
+        .alnassr-theme { background: linear-gradient(135deg, #FBBF24 0%, #D4AF37 100%); color: #1F2937; }
+        
+        /* Smooth Scrolling */
+        .timeline-container {
+            scroll-behavior: smooth;
+        }
+        
+        /* Loading Animation */
+        .loading-shimmer {
+            background: linear-gradient(90deg, rgba(255,255,255,0.1) 25%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0.1) 75%);
+            background-size: 200% 100%;
+            animation: shimmer 2s infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+    </style>
+<script type="module" src="https://static.rocket.new/rocket-web.js?_cfg=https%3A%2F%2Fcr7legacy3967back.builtwithrocket.new&_be=https%3A%2F%2Fapplication.rocket.new&_v=0.1.8"></script>
+</head>
+<body class="bg-gradient-to-br from-secondary-900 via-secondary-800 to-secondary-700 min-h-screen">
+    <!-- Navigation Header -->
+    <nav class="relative z-50 bg-black bg-opacity-20 backdrop-blur-sm border-b border-primary-500 border-opacity-30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <svg class="w-10 h-10 text-primary-500" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2L13.09 8.26L20 9L13.09 9.74L12 16L10.91 9.74L4 9L10.91 8.26L12 2Z"/>
+                    </svg>
+                    <span class="ml-3 text-xl font-playfair font-bold text-white">CR7 Legacy</span>
+                </div>
+                
+                <!-- Navigation Links -->
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="interactive_landing.html" class="text-white hover:text-primary-300 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">Landing</a>
+                        <a href="hero_tribute.html" class="text-white hover:text-primary-300 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">Tribute</a>
+                        <a href="club_journey.html" class="text-primary-400 hover:text-primary-300 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 border-b-2 border-primary-500">Journey</a>
+                        <a href="statistical_monument.html" class="text-white hover:text-primary-300 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">Stats</a>
+                        <a href="goals_gallery.html" class="text-white hover:text-primary-300 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">Gallery</a>
+                    </div>
+                </div>
+                
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button id="mobileMenuBtn" class="text-white hover:text-primary-300 focus:outline-none focus:text-primary-300">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile menu -->
+        <div id="mobileMenu" class="md:hidden hidden bg-black bg-opacity-40 backdrop-blur-sm">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="interactive_landing.html" class="text-white hover:text-primary-300 block px-3 py-2 rounded-md text-base font-medium">Landing</a>
+                <a href="hero_tribute.html" class="text-white hover:text-primary-300 block px-3 py-2 rounded-md text-base font-medium">Tribute</a>
+                <a href="club_journey.html" class="text-primary-400 block px-3 py-2 rounded-md text-base font-medium border-l-4 border-primary-500">Journey</a>
+                <a href="statistical_monument.html" class="text-white hover:text-primary-300 block px-3 py-2 rounded-md text-base font-medium">Stats</a>
+                <a href="goals_gallery.html" class="text-white hover:text-primary-300 block px-3 py-2 rounded-md text-base font-medium">Gallery</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative py-20 overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-r from-black via-transparent to-black opacity-60"></div>
+        <div class="absolute inset-0">
+            <img src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3" alt="Football stadium background" class="w-full h-full object-cover" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1584824486509-112e4181ff6b?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'; this.onerror=null;" />
+        </div>
+        
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-5xl md:text-7xl font-playfair font-bold text-white mb-6">
+                The <span class="text-primary-400">Legendary</span> Journey
+            </h1>
+            <p class="text-xl md:text-2xl text-gray-200 max-w-3xl mx-auto mb-8 font-inter">
+                Six chapters of greatness across the world's most prestigious clubs
+            </p>
+            <div class="flex items-center justify-center space-x-4 text-primary-300">
+                <div class="w-2 h-2 bg-primary-400 rounded-full animate-pulse"></div>
+                <span class="text-sm font-inter uppercase tracking-wider">2003 - 2025 • 22 Years of Excellence</span>
+                <div class="w-2 h-2 bg-primary-400 rounded-full animate-pulse"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Timeline Navigation -->
+    <section class="sticky top-16 z-40 timeline-nav py-4">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-center">
+                <div class="flex space-x-4 md:space-x-8 overflow-x-auto pb-2">
+                    <!-- Sporting CP -->
+                    <button class="club-badge active flex flex-col items-center p-3 rounded-lg transition-all duration-300" data-club="sporting">
+                        <div class="w-12 h-12 bg-green-600 rounded-full flex items-center justify-center mb-2">
+                            <span class="text-white font-bold text-sm">SCP</span>
+                        </div>
+                        <span class="text-xs text-white font-inter">2003-2003</span>
+                    </button>
+                    
+                    <!-- Manchester United -->
+                    <button class="club-badge flex flex-col items-center p-3 rounded-lg transition-all duration-300" data-club="united">
+                        <div class="w-12 h-12 bg-red-600 rounded-full flex items-center justify-center mb-2">
+                            <span class="text-white font-bold text-sm">MU</span>
+                        </div>
+                        <span class="text-xs text-white font-inter">2003-2009</span>
+                    </button>
+                    
+                    <!-- Real Madrid -->
+                    <button class="club-badge flex flex-col items-center p-3 rounded-lg transition-all duration-300" data-club="madrid">
+                        <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center mb-2">
+                            <span class="text-gray-800 font-bold text-sm">RM</span>
+                        </div>
+                        <span class="text-xs text-white font-inter">2009-2018</span>
+                    </button>
+                    
+                    <!-- Juventus -->
+                    <button class="club-badge flex flex-col items-center p-3 rounded-lg transition-all duration-300" data-club="juventus">
+                        <div class="w-12 h-12 bg-black border-2 border-white rounded-full flex items-center justify-center mb-2">
+                            <span class="text-white font-bold text-sm">JUV</span>
+                        </div>
+                        <span class="text-xs text-white font-inter">2018-2021</span>
+                    </button>
+                    
+                    <!-- Manchester United Return -->
+                    <button class="club-badge flex flex-col items-center p-3 rounded-lg transition-all duration-300" data-club="united-return">
+                        <div class="w-12 h-12 bg-red-600 rounded-full flex items-center justify-center mb-2">
+                            <span class="text-white font-bold text-sm">MU</span>
+                        </div>
+                        <span class="text-xs text-white font-inter">2021-2022</span>
+                    </button>
+                    
+                    <!-- Al Nassr -->
+                    <button class="club-badge flex flex-col items-center p-3 rounded-lg transition-all duration-300" data-club="alnassr">
+                        <div class="w-12 h-12 bg-yellow-500 rounded-full flex items-center justify-center mb-2">
+                            <span class="text-black font-bold text-sm">AN</span>
+                        </div>
+                        <span class="text-xs text-white font-inter">2023-Present</span>
+                    </button>
+                </div>
+            </div>
+            <div class="progress-bar mt-2"></div>
+        </div>
+    </section>
+
+    <!-- Club Sections Container -->
+    <div class="timeline-container">
+        <!-- Sporting CP Section -->
+        <section id="sporting" class="club-section sporting-theme min-h-screen py-20">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid lg:grid-cols-2 gap-12 items-center">
+                    <div class="text-white">
+                        <div class="flex items-center mb-6">
+                            <div class="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center mr-4">
+                                <span class="text-white font-bold text-xl">SCP</span>
+                            </div>
+                            <div>
+                                <h2 class="text-4xl md:text-5xl font-playfair font-bold">Sporting CP</h2>
+                                <p class="text-xl text-green-200 font-inter">The Beginning • 2003</p>
+                            </div>
+                        </div>
+                        
+                        <p class="text-lg mb-8 leading-relaxed font-inter">
+                            Where legends are born. At just 18 years old, Cristiano made his professional debut with Sporting CP, 
+                            showcasing the raw talent and determination that would define a legendary career. His brief but impactful 
+                            time in Lisbon laid the foundation for greatness.
+                        </p>
+                        
+                        <div class="grid grid-cols-2 gap-6 mb-8">
+                            <div class="achievement-card p-6 rounded-lg">
+                                <h3 class="text-2xl font-playfair font-bold text-primary-400 mb-2">31</h3>
+                                <p class="text-sm text-green-200 font-inter">Appearances</p>
+                            </div>
+                            <div class="achievement-card p-6 rounded-lg">
+                                <h3 class="text-2xl font-playfair font-bold text-primary-400 mb-2">5</h3>
+                                <p class="text-sm text-green-200 font-inter">Goals</p>
+                            </div>
+                        </div>
+                        
+                        <button class="bg-primary-600 hover:bg-primary-500 text-white px-8 py-3 rounded-lg font-inter font-medium transition-all duration-300 transform hover:scale-105 shadow-subtle" onclick="openVideoModal('sporting')">
+                            Watch Highlights
+                        </button>
+                    </div>
+                    
+                    <div class="relative">
+                        <img src="https://images.unsplash.com/photo-1551698618-1dfe5d97d256?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3" alt="Young Cristiano Ronaldo at Sporting CP" class="w-full h-96 object-cover rounded-2xl shadow-dramatic" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1584824486509-112e4181ff6b?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'; this.onerror=null;" />
+                        <div class="absolute -bottom-6 -right-6 bg-primary-500 text-white p-4 rounded-lg shadow-dramatic">
+                            <p class="font-playfair font-bold text-lg">The Genesis</p>
+                            <p class="text-sm font-inter">Professional Debut</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Manchester United Section -->
+        <section id="united" class="club-section united-theme min-h-screen py-20">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid lg:grid-cols-2 gap-12 items-center">
+                    <div class="order-2 lg:order-1 relative">
+                        <img src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3" alt="Cristiano Ronaldo at Manchester United" class="w-full h-96 object-cover rounded-2xl shadow-dramatic" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1584824486509-112e4181ff6b?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'; this.onerror=null;" />
+                        <div class="absolute -bottom-6 -left-6 bg-accent-600 text-white p-4 rounded-lg shadow-dramatic">
+                            <p class="font-playfair font-bold text-lg">Theatre of Dreams</p>
+                            <p class="text-sm font-inter">First Golden Era</p>
+                        </div>
+                    </div>
+                    
+                    <div class="order-1 lg:order-2 text-white">
+                        <div class="flex items-center mb-6">
+                            <div class="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center mr-4">
+                                <span class="text-white font-bold text-xl">MU</span>
+                            </div>
+                            <div>
+                                <h2 class="text-4xl md:text-5xl font-playfair font-bold">Manchester United</h2>
+                                <p class="text-xl text-red-200 font-inter">The Rise • 2003-2009</p>
+                            </div>
+                        </div>
+                        
+                        <p class="text-lg mb-8 leading-relaxed font-inter">
+                            Under Sir Alex Ferguson's guidance, Cristiano transformed from a promising winger into a global superstar. 
+                            Six incredible years at Old Trafford, winning everything possible and establishing himself as one of the 
+                            world's best players.
+                        </p>
+                        
+                        <div class="grid grid-cols-3 gap-4 mb-8">
+                            <div class="achievement-card p-4 rounded-lg text-center">
+                                <h3 class="text-xl font-playfair font-bold text-primary-400 mb-1">292</h3>
+                                <p class="text-xs text-red-200 font-inter">Appearances</p>
+                            </div>
+                            <div class="achievement-card p-4 rounded-lg text-center">
+                                <h3 class="text-xl font-playfair font-bold text-primary-400 mb-1">118</h3>
+                                <p class="text-xs text-red-200 font-inter">Goals</p>
+                            </div>
+                            <div class="achievement-card p-4 rounded-lg text-center">
+                                <h3 class="text-xl font-playfair font-bold text-primary-400 mb-1">9</h3>
+                                <p class="text-xs text-red-200 font-inter">Trophies</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex flex-wrap gap-3 mb-8">
+                            <span class="bg-primary-600 text-white px-3 py-1 rounded-full text-sm font-inter">3x Premier League</span>
+                            <span class="bg-primary-600 text-white px-3 py-1 rounded-full text-sm font-inter">Champions League</span>
+                            <span class="bg-primary-600 text-white px-3 py-1 rounded-full text-sm font-inter">Ballon d'Or 2008</span>
+                        </div>
+                        
+                        <button class="bg-primary-600 hover:bg-primary-500 text-white px-8 py-3 rounded-lg font-inter font-medium transition-all duration-300 transform hover:scale-105 shadow-subtle" onclick="openVideoModal('united')">
+                            Watch Highlights
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Real Madrid Section -->
+        <section id="madrid" class="club-section madrid-theme min-h-screen py-20">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid lg:grid-cols-2 gap-12 items-center">
+                    <div class="text-gray-800">
+                        <div class="flex items-center mb-6">
+                            <div class="w-16 h-16 bg-white border-2 border-gray-300 rounded-full flex items-center justify-center mr-4">
+                                <span class="text-gray-800 font-bold text-xl">RM</span>
+                            </div>
+                            <div>
+                                <h2 class="text-4xl md:text-5xl font-playfair font-bold">Real Madrid</h2>
+                                <p class="text-xl text-gray-600 font-inter">The Legend • 2009-2018</p>
+                            </div>
+                        </div>
+                        
+                        <p class="text-lg mb-8 leading-relaxed font-inter">
+                            Nine years of unprecedented success at the Santiago Bernabéu. Cristiano became Real Madrid's all-time 
+                            leading scorer and helped the club win four Champions League titles, cementing his status as a true 
+                            galáctico and football legend.
+                        </p>
+                        
+                        <div class="grid grid-cols-3 gap-4 mb-8">
+                            <div class="achievement-card p-4 rounded-lg text-center bg-white bg-opacity-80">
+                                <h3 class="text-xl font-playfair font-bold text-primary-600 mb-1">438</h3>
+                                <p class="text-xs text-gray-600 font-inter">Appearances</p>
+                            </div>
+                            <div class="achievement-card p-4 rounded-lg text-center bg-white bg-opacity-80">
+                                <h3 class="text-xl font-playfair font-bold text-primary-600 mb-1">451</h3>
+                                <p class="text-xs text-gray-600 font-inter">Goals</p>
+                            </div>
+                            <div class="achievement-card p-4 rounded-lg text-center bg-white bg-opacity-80">
+                                <h3 class="text-xl font-playfair font-bold text-primary-600 mb-1">16</h3>
+                                <p class="text-xs text-gray-600 font-inter">Trophies</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex flex-wrap gap-3 mb-8">
+                            <span class="bg-primary-600 text-white px-3 py-1 rounded-full text-sm font-inter">4x Champions League</span>
+                            <span class="bg-primary-600 text-white px-3 py-1 rounded-full text-sm font-inter">2x La Liga</span>
+                            <span class="bg-primary-600 text-white px-3 py-1 rounded-full text-sm font-inter">4x Ballon d'Or</span>
+                        </div>
+                        
+                        <button class="bg-primary-600 hover:bg-primary-500 text-white px-8 py-3 rounded-lg font-inter font-medium transition-all duration-300 transform hover:scale-105 shadow-subtle" onclick="openVideoModal('madrid')">
+                            Watch Highlights
+                        </button>
+                    </div>
+                    
+                    <div class="relative">
+                        <img src="https://images.pexels.com/photos/274506/pexels-photo-274506.jpeg?auto=compress&cs=tinysrgb&w=2940" alt="Cristiano Ronaldo at Real Madrid" class="w-full h-96 object-cover rounded-2xl shadow-dramatic" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1584824486509-112e4181ff6b?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'; this.onerror=null;" />
+                        <div class="absolute -bottom-6 -right-6 bg-primary-600 text-white p-4 rounded-lg shadow-dramatic">
+                            <p class="font-playfair font-bold text-lg">Hala Madrid</p>
+                            <p class="text-sm font-inter">Peak Performance</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Juventus Section -->
+        <section id="juventus" class="club-section juventus-theme min-h-screen py-20">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid lg:grid-cols-2 gap-12 items-center">
+                    <div class="order-2 lg:order-1 relative">
+                        <img src="https://images.pixabay.com/photo/2016/11/29/08/41/soccer-1868924_1280.jpg" alt="Cristiano Ronaldo at Juventus" class="w-full h-96 object-cover rounded-2xl shadow-dramatic" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1584824486509-112e4181ff6b?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'; this.onerror=null;" />
+                        <div class="absolute -bottom-6 -left-6 bg-gray-800 text-white p-4 rounded-lg shadow-dramatic">
+                            <p class="font-playfair font-bold text-lg">Fino Alla Fine</p>
+                            <p class="text-sm font-inter">Italian Mastery</p>
+                        </div>
+                    </div>
+                    
+                    <div class="order-1 lg:order-2 text-white">
+                        <div class="flex items-center mb-6">
+                            <div class="w-16 h-16 bg-black border-2 border-white rounded-full flex items-center justify-center mr-4">
+                                <span class="text-white font-bold text-xl">JUV</span>
+                            </div>
+                            <div>
+                                <h2 class="text-4xl md:text-5xl font-playfair font-bold">Juventus</h2>
+                                <p class="text-xl text-gray-300 font-inter">The Challenge • 2018-2021</p>
+                            </div>
+                        </div>
+                        
+                        <p class="text-lg mb-8 leading-relaxed font-inter">
+                            A new chapter in Turin, where Cristiano proved his adaptability and continued excellence. Three successful 
+                            seasons in Serie A, adding Italian mastery to his collection while maintaining his incredible goal-scoring 
+                            record and leadership qualities.
+                        </p>
+                        
+                        <div class="grid grid-cols-3 gap-4 mb-8">
+                            <div class="achievement-card p-4 rounded-lg text-center">
+                                <h3 class="text-xl font-playfair font-bold text-primary-400 mb-1">134</h3>
+                                <p class="text-xs text-gray-300 font-inter">Appearances</p>
+                            </div>
+                            <div class="achievement-card p-4 rounded-lg text-center">
+                                <h3 class="text-xl font-playfair font-bold text-primary-400 mb-1">101</h3>
+                                <p class="text-xs text-gray-300 font-inter">Goals</p>
+                            </div>
+                            <div class="achievement-card p-4 rounded-lg text-center">
+                                <h3 class="text-xl font-playfair font-bold text-primary-400 mb-1">5</h3>
+                                <p class="text-xs text-gray-300 font-inter">Trophies</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex flex-wrap gap-3 mb-8">
+                            <span class="bg-primary-600 text-white px-3 py-1 rounded-full text-sm font-inter">2x Serie A</span>
+                            <span class="bg-primary-600 text-white px-3 py-1 rounded-full text-sm font-inter">Coppa Italia</span>
+                            <span class="bg-primary-600 text-white px-3 py-1 rounded-full text-sm font-inter">Top Scorer</span>
+                        </div>
+                        
+                        <button class="bg-primary-600 hover:bg-primary-500 text-white px-8 py-3 rounded-lg font-inter font-medium transition-all duration-300 transform hover:scale-105 shadow-subtle" onclick="openVideoModal('juventus')">
+                            Watch Highlights
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Manchester United Return Section -->
+        <section id="united-return" class="club-section united-theme min-h-screen py-20">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid lg:grid-cols-2 gap-12 items-center">
+                    <div class="text-white">
+                        <div class="flex items-center mb-6">
+                            <div class="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center mr-4">
+                                <span class="text-white font-bold text-xl">MU</span>
+                            </div>
+                            <div>
+                                <h2 class="text-4xl md:text-5xl font-playfair font-bold">Manchester United</h2>
+                                <p class="text-xl text-red-200 font-inter">The Return • 2021-2022</p>
+                            </div>
+                        </div>
+                        
+                        <p class="text-lg mb-8 leading-relaxed font-inter">
+                            "I'm back where I belong." The emotional homecoming that captured hearts worldwide. Returning to Old Trafford 
+                            after 12 years, Cristiano showed that class is permanent, delivering memorable moments and proving his 
+                            enduring connection to the Theatre of Dreams.
+                        </p>
+                        
+                        <div class="grid grid-cols-3 gap-4 mb-8">
+                            <div class="achievement-card p-4 rounded-lg text-center">
+                                <h3 class="text-xl font-playfair font-bold text-primary-400 mb-1">54</h3>
+                                <p class="text-xs text-red-200 font-inter">Appearances</p>
+                            </div>
+                            <div class="achievement-card p-4 rounded-lg text-center">
+                                <h3 class="text-xl font-playfair font-bold text-primary-400 mb-1">27</h3>
+                                <p class="text-xs text-red-200 font-inter">Goals</p>
+                            </div>
+                            <div class="achievement-card p-4 rounded-lg text-center">
+                                <h3 class="text-xl font-playfair font-bold text-primary-400 mb-1">∞</h3>
+                                <p class="text-xs text-red-200 font-inter">Memories</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex flex-wrap gap-3 mb-8">
+                            <span class="bg-primary-600 text-white px-3 py-1 rounded-full text-sm font-inter">Emotional Return</span>
+                            <span class="bg-primary-600 text-white px-3 py-1 rounded-full text-sm font-inter">Top Scorer</span>
+                            <span class="bg-primary-600 text-white px-3 py-1 rounded-full text-sm font-inter">Champions League</span>
+                        </div>
+                        
+                        <button class="bg-primary-600 hover:bg-primary-500 text-white px-8 py-3 rounded-lg font-inter font-medium transition-all duration-300 transform hover:scale-105 shadow-subtle" onclick="openVideoModal('united-return')">
+                            Watch Highlights
+                        </button>
+                    </div>
+                    
+                    <div class="relative">
+                        <img src="https://images.pexels.com/photos/1884574/pexels-photo-1884574.jpeg?auto=compress&cs=tinysrgb&w=2940" alt="Cristiano Ronaldo returns to Manchester United" class="w-full h-96 object-cover rounded-2xl shadow-dramatic" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1584824486509-112e4181ff6b?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'; this.onerror=null;" />
+                        <div class="absolute -bottom-6 -right-6 bg-accent-600 text-white p-4 rounded-lg shadow-dramatic">
+                            <p class="font-playfair font-bold text-lg">Welcome Home</p>
+                            <p class="text-sm font-inter">Full Circle</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Al Nassr Section -->
+        <section id="alnassr" class="club-section alnassr-theme min-h-screen py-20">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid lg:grid-cols-2 gap-12 items-center">
+                    <div class="order-2 lg:order-1 relative">
+                        <img src="https://images.pixabay.com/photo/2016/06/03/13/57/digital-art-1433427_1280.jpg" alt="Cristiano Ronaldo at Al Nassr" class="w-full h-96 object-cover rounded-2xl shadow-dramatic" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1584824486509-112e4181ff6b?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'; this.onerror=null;" />
+                        <div class="absolute -bottom-6 -left-6 bg-yellow-600 text-black p-4 rounded-lg shadow-dramatic">
+                            <p class="font-playfair font-bold text-lg">New Horizons</p>
+                            <p class="text-sm font-inter">Global Ambassador</p>
+                        </div>
+                    </div>
+                    
+                    <div class="order-1 lg:order-2 text-gray-800">
+                        <div class="flex items-center mb-6">
+                            <div class="w-16 h-16 bg-yellow-500 rounded-full flex items-center justify-center mr-4">
+                                <span class="text-black font-bold text-xl">AN</span>
+                            </div>
+                            <div>
+                                <h2 class="text-4xl md:text-5xl font-playfair font-bold">Al Nassr</h2>
+                                <p class="text-xl text-gray-700 font-inter">New Chapter • 2023-Present</p>
+                            </div>
+                        </div>
+                        
+                        <p class="text-lg mb-8 leading-relaxed font-inter">
+                            A groundbreaking move to Saudi Arabia, opening new frontiers for football and continuing to break barriers. 
+                            Cristiano's influence extends beyond the pitch, elevating the Saudi Pro League and inspiring a new generation 
+                            of players across the Middle East.
+                        </p>
+                        
+                        <div class="grid grid-cols-3 gap-4 mb-8">
+                            <div class="achievement-card p-4 rounded-lg text-center bg-white bg-opacity-80">
+                                <h3 class="text-xl font-playfair font-bold text-primary-600 mb-1">45+</h3>
+                                <p class="text-xs text-gray-700 font-inter">Appearances</p>
+                            </div>
+                            <div class="achievement-card p-4 rounded-lg text-center bg-white bg-opacity-80">
+                                <h3 class="text-xl font-playfair font-bold text-primary-600 mb-1">35+</h3>
+                                <p class="text-xs text-gray-700 font-inter">Goals</p>
+                            </div>
+                            <div class="achievement-card p-4 rounded-lg text-center bg-white bg-opacity-80">
+                                <h3 class="text-xl font-playfair font-bold text-primary-600 mb-1">∞</h3>
+                                <p class="text-xs text-gray-700 font-inter">Impact</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex flex-wrap gap-3 mb-8">
+                            <span class="bg-primary-600 text-white px-3 py-1 rounded-full text-sm font-inter">League Pioneer</span>
+                            <span class="bg-primary-600 text-white px-3 py-1 rounded-full text-sm font-inter">Global Ambassador</span>
+                            <span class="bg-primary-600 text-white px-3 py-1 rounded-full text-sm font-inter">Still Scoring</span>
+                        </div>
+                        
+                        <button class="bg-primary-600 hover:bg-primary-500 text-white px-8 py-3 rounded-lg font-inter font-medium transition-all duration-300 transform hover:scale-105 shadow-subtle" onclick="openVideoModal('alnassr')">
+                            Watch Highlights
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Video Modal -->
+    <div id="videoModal" class="video-modal fixed inset-0 z-50 flex items-center justify-center p-4">
+        <div class="relative bg-black rounded-2xl overflow-hidden shadow-dramatic max-w-4xl w-full">
+            <!-- Close Button -->
+            <button id="closeVideoModal" class="absolute top-4 right-4 z-10 bg-black bg-opacity-50 hover:bg-opacity-70 text-white rounded-full p-2 transition-all duration-200">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+            </button>
+            
+            <!-- Video Content -->
+            <div class="aspect-video bg-gray-900 flex items-center justify-center">
+                <div id="videoLoader" class="text-center">
+                    <div class="loading-shimmer w-16 h-16 rounded-full mx-auto mb-4"></div>
+                    <p class="text-white font-inter">Loading highlights...</p>
+                </div>
+                
+                <video id="highlightVideo" class="w-full h-full object-cover hidden" controls>
+                    <source src="https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4" type="video/mp4" />
+                    <p class="text-white">Your browser doesn't support video playback.</p>
+                </video>
+            </div>
+            
+            <!-- Video Info -->
+            <div id="videoInfo" class="p-6 bg-gradient-to-r from-secondary-900 to-secondary-800">
+                <h3 id="videoTitle" class="text-xl font-playfair font-bold text-white mb-2">Club Highlights</h3>
+                <p id="videoDescription" class="text-gray-300 font-inter mb-4">Experience the greatest moments from this legendary chapter.</p>
+                
+                <div class="flex flex-wrap gap-3">
+                    <a href="statistical_monument.html" class="bg-primary-600 hover:bg-primary-500 text-white px-4 py-2 rounded-lg text-sm font-inter font-medium transition-colors duration-200">
+                        View Statistics
+                    </a>
+                    <a href="goals_gallery.html" class="bg-secondary-700 hover:bg-secondary-600 text-white px-4 py-2 rounded-lg text-sm font-inter font-medium transition-colors duration-200">
+                        Goals Gallery
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="relative z-10 bg-black bg-opacity-30 backdrop-blur-sm border-t border-primary-500 border-opacity-30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div class="md:col-span-2">
+                    <div class="flex items-center mb-4">
+                        <svg class="w-8 h-8 text-primary-500 mr-3" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2L13.09 8.26L20 9L13.09 9.74L12 16L10.91 9.74L4 9L10.91 8.26L12 2Z"/>
+                        </svg>
+                        <span class="text-xl font-playfair font-bold text-white">CR7 Legacy</span>
+                    </div>
+                    <p class="text-gray-300 font-inter mb-4 max-w-md">
+                        Celebrating the legendary journey of Cristiano Ronaldo through six transformative chapters 
+                        across the world's greatest football clubs.
+                    </p>
+                    <div class="flex space-x-4">
+                        <div class="text-center">
+                            <p class="text-2xl font-playfair font-bold text-primary-400">6</p>
+                            <p class="text-xs text-gray-400 font-inter">Clubs</p>
+                        </div>
+                        <div class="text-center">
+                            <p class="text-2xl font-playfair font-bold text-primary-400">22</p>
+                            <p class="text-xs text-gray-400 font-inter">Years</p>
+                        </div>
+                        <div class="text-center">
+                            <p class="text-2xl font-playfair font-bold text-primary-400">900+</p>
+                            <p class="text-xs text-gray-400 font-inter">Goals</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-white font-playfair font-bold mb-4">Journey</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#sporting" class="text-gray-300 hover:text-primary-300 text-sm font-inter transition-colors duration-200">Sporting CP</a></li>
+                        <li><a href="#united" class="text-gray-300 hover:text-primary-300 text-sm font-inter transition-colors duration-200">Manchester United</a></li>
+                        <li><a href="#madrid" class="text-gray-300 hover:text-primary-300 text-sm font-inter transition-colors duration-200">Real Madrid</a></li>
+                        <li><a href="#juventus" class="text-gray-300 hover:text-primary-300 text-sm font-inter transition-colors duration-200">Juventus</a></li>
+                        <li><a href="#alnassr" class="text-gray-300 hover:text-primary-300 text-sm font-inter transition-colors duration-200">Al Nassr</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-white font-playfair font-bold mb-4">Explore</h3>
+                    <ul class="space-y-2">
+                        <li><a href="hero_tribute.html" class="text-gray-300 hover:text-primary-300 text-sm font-inter transition-colors duration-200">Hero Tribute</a></li>
+                        <li><a href="statistical_monument.html" class="text-gray-300 hover:text-primary-300 text-sm font-inter transition-colors duration-200">Statistics</a></li>
+                        <li><a href="goals_gallery.html" class="text-gray-300 hover:text-primary-300 text-sm font-inter transition-colors duration-200">Goals Gallery</a></li>
+                        <li><a href="interactive_landing.html" class="text-gray-300 hover:text-primary-300 text-sm font-inter transition-colors duration-200">Landing</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400 font-inter text-sm mb-4 md:mb-0">© 2025 CR7 Legacy. All Rights Reserved.</p>
+                <div class="flex space-x-6">
+                    <a href="hero_tribute.html" class="text-gray-400 hover:text-primary-300 text-sm font-inter transition-colors duration-200">Tribute</a>
+                    <a href="statistical_monument.html" class="text-gray-400 hover:text-primary-300 text-sm font-inter transition-colors duration-200">Statistics</a>
+                    <a href="goals_gallery.html" class="text-gray-400 hover:text-primary-300 text-sm font-inter transition-colors duration-200">Gallery</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Timeline Navigation
+        function initializeTimeline() {
+            const badges = document.querySelectorAll('.club-badge');
+            const sections = document.querySelectorAll('.club-section');
+            const progressBar = document.querySelector('.progress-bar');
+            
+            // Intersection Observer for sections
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        
+                        // Update active badge
+                        const clubId = entry.target.id;
+                        badges.forEach(badge => {
+                            badge.classList.remove('active');
+                            if (badge.dataset.club === clubId || 
+                                (badge.dataset.club === 'united-return' && clubId === 'united-return')) {
+                                badge.classList.add('active');
+                            }
+                        });
+                        
+                        // Update progress bar
+                        const sectionIndex = Array.from(sections).indexOf(entry.target);
+                        const progress = ((sectionIndex + 1) / sections.length) * 100;
+                        progressBar.style.transform = `scaleX(${progress / 100})`;
+                    }
+                });
+            }, { threshold: 0.3 });
+            
+            sections.forEach(section => observer.observe(section));
+            
+            // Badge click handlers
+            badges.forEach(badge => {
+                badge.addEventListener('click', () => {
+                    const clubId = badge.dataset.club;
+                    const targetSection = document.getElementById(clubId);
+                    if (targetSection) {
+                        targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                });
+            });
+        }
+        
+        // Video Modal Functionality
+        function initializeVideoModal() {
+            const modal = document.getElementById('videoModal');
+            const video = document.getElementById('highlightVideo');
+            const loader = document.getElementById('videoLoader');
+            const closeBtn = document.getElementById('closeVideoModal');
+            const videoTitle = document.getElementById('videoTitle');
+            const videoDescription = document.getElementById('videoDescription');
+            
+            window.openVideoModal = function(club) {
+                const clubData = {
+                    'sporting': {
+                        title: 'Sporting CP Highlights',
+                        description: 'The beginning of a legendary journey at the José Alvalade Stadium.'
+                    },
+                    'united': {
+                        title: 'Manchester United Glory Days',
+                        description: 'Six incredible years of transformation and triumph at Old Trafford.'
+                    },
+                    'madrid': {
+                        title: 'Real Madrid Masterclass',
+                        description: 'Nine years of unprecedented success at the Santiago Bernabéu.'
+                    },
+                    'juventus': {
+                        title: 'Juventus Excellence',
+                        description: 'Three seasons of Italian mastery and continued brilliance in Turin.'
+                    },
+                    'united-return': {
+                        title: 'Manchester United Return',
+                        description: 'The emotional homecoming that captured hearts worldwide.'
+                    },
+                    'alnassr': {
+                        title: 'Al Nassr New Horizons',
+                        description: 'Breaking new frontiers and inspiring a generation in Saudi Arabia.'
+                    }
+                };
+                
+                const data = clubData[club];
+                videoTitle.textContent = data.title;
+                videoDescription.textContent = data.description;
+                
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+                
+                // Simulate video loading
+                setTimeout(() => {
+                    loader.classList.add('hidden');
+                    video.classList.remove('hidden');
+                    video.play().catch(e => console.log('Video autoplay prevented'));
+                }, 1500);
+            };
+            
+            function closeVideoModal() {
+                modal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+                video.pause();
+                video.currentTime = 0;
+                video.classList.add('hidden');
+                loader.classList.remove('hidden');
+            }
+            
+            closeBtn.addEventListener('click', closeVideoModal);
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) closeVideoModal();
+            });
+            
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && modal.classList.contains('active')) {
+                    closeVideoModal();
+                }
+            });
+        }
+        
+        // Mobile Menu Toggle
+        function initializeMobileMenu() {
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+            
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+        
+        // Smooth scrolling for anchor links
+        function initializeSmoothScrolling() {
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                });
+            });
+        }
+        
+        // Initialize everything when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeTimeline();
+            initializeVideoModal();
+            initializeMobileMenu();
+            initializeSmoothScrolling();
+            
+            // Add initial animation to first section
+            setTimeout(() => {
+                const firstSection = document.querySelector('.club-section');
+                if (firstSection) {
+                    firstSection.classList.add('visible');
+                }
+            }, 500);
+        });
+        
+        // Parallax effect for hero section
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const parallax = document.querySelector('section:first-of-type .absolute.inset-0 img');
+            if (parallax) {
+                const speed = scrolled * 0.5;
+                parallax.style.transform = `translateY(${speed}px)`;
+            }
+        });
+    </script>
+<script id="dhws-dataInjector" src="../public/dhws-data-injector.js"></script>
+</body>
+</html>

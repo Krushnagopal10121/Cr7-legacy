@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tribute - CR7 Legacy</title>
+    <meta name="description" content="Experience the legendary journey of Cristiano Ronaldo through an epic tribute celebrating discipline transformed into art and greatness that transcends generations." />
+    <link rel="stylesheet" href="../css/main.css" />
+    <style>
+        /* Hero Video Background */
+        .hero-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            opacity: 0.3;
+        }
+        
+        /* Parallax Effect */
+        .parallax-container {
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+        
+        .parallax-element {
+            transform: translateZ(-1px) scale(2);
+        }
+        
+        /* Statistics Counter Animation */
+        .stat-counter {
+            font-variant-numeric: tabular-nums;
+            transition: all 0.6s ease-out;
+        }
+        
+        .stat-counter.animate {
+            transform: scale(1.1);
+            color: #D4AF37;
+        }
+        
+        /* Quote Carousel */
+        .quote-carousel {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .quote-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            opacity: 0;
+            transform: translateX(100%);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .quote-slide.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .quote-slide.prev {
+            transform: translateX(-100%);
+        }
+        
+        /* Cinematic Scroll Effects */
+        .reveal-on-scroll {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease-out;
+        }
+        
+        .reveal-on-scroll.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Golden Glow Effect */
+        .golden-glow {
+            position: relative;
+        }
+        
+        .golden-glow::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #D4AF37, #FBBF24, #D4AF37);
+            border-radius: inherit;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .golden-glow:hover::before {
+            opacity: 0.7;
+        }
+        
+        /* Portrait Overlay */
+        .portrait-overlay {
+            background: linear-gradient(135deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 50%, rgba(212,175,55,0.1) 100%);
+        }
+        
+        /* Floating Elements */
+        .floating-element {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .floating-element:nth-child(odd) {
+            animation-delay: -2s;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        /* Video Controls */
+        .video-controls {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 8px;
+            padding: 8px;
+            display: flex;
+            gap: 8px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .hero-section:hover .video-controls {
+            opacity: 1;
+        }
+        
+        .video-control-btn {
+            background: none;
+            border: none;
+            color: white;
+            padding: 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        
+        .video-control-btn:hover {
+            background-color: rgba(212, 175, 55, 0.3);
+        }
+    </style>
+<script type="module" src="https://static.rocket.new/rocket-web.js?_cfg=https%3A%2F%2Fcr7legacy3967back.builtwithrocket.new&_be=https%3A%2F%2Fapplication.rocket.new&_v=0.1.8"></script>
+</head>
+<body class="bg-gradient-to-br from-secondary-900 via-secondary-800 to-secondary-700 min-h-screen">
+    <!-- Navigation Header -->
+    <nav class="relative z-50 bg-black bg-opacity-20 backdrop-blur-sm border-b border-primary-500 border-opacity-30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <svg class="w-10 h-10 text-primary-500" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2L13.09 8.26L20 9L13.09 9.74L12 16L10.91 9.74L4 9L10.91 8.26L12 2Z"/>
+                    </svg>
+                    <span class="ml-3 text-xl font-playfair font-bold text-white">CR7 Legacy</span>
+                </div>
+                
+                <!-- Navigation Links -->
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="interactive_landing.html" class="text-white hover:text-primary-300 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">Landing</a>
+                        <a href="hero_tribute.html" class="text-primary-400 hover:text-primary-300 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 border-b-2 border-primary-500">Tribute</a>
+                        <a href="club_journey.html" class="text-white hover:text-primary-300 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">Journey</a>
+                        <a href="statistical_monument.html" class="text-white hover:text-primary-300 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">Stats</a>
+                        <a href="goals_gallery.html" class="text-white hover:text-primary-300 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">Gallery</a>
+                    </div>
+                </div>
+                
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button id="mobileMenuBtn" class="text-white hover:text-primary-300 focus:outline-none focus:text-primary-300">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile menu -->
+        <div id="mobileMenu" class="md:hidden hidden bg-black bg-opacity-40 backdrop-blur-sm">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="interactive_landing.html" class="text-white hover:text-primary-300 block px-3 py-2 rounded-md text-base font-medium">Landing</a>
+                <a href="hero_tribute.html" class="text-primary-400 block px-3 py-2 rounded-md text-base font-medium border-l-4 border-primary-500">Tribute</a>
+                <a href="club_journey.html" class="text-white hover:text-primary-300 block px-3 py-2 rounded-md text-base font-medium">Journey</a>
+                <a href="statistical_monument.html" class="text-white hover:text-primary-300 block px-3 py-2 rounded-md text-base font-medium">Stats</a>
+                <a href="goals_gallery.html" class="text-white hover:text-primary-300 block px-3 py-2 rounded-md text-base font-medium">Gallery</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section relative min-h-screen flex items-center justify-center overflow-hidden parallax-container">
+        <!-- Background Video -->
+        <video id="heroVideo" class="hero-video" autoplay muted loop playsinline>
+            <source src="https://www.youtube.com/embed/A6O67uLJfcQ?si=1QgkIDiSXoyeWH36" type="video/mp4" />
+        </video>
+        
+        <!-- Video Controls -->
+        <div class="video-controls">
+            <button id="playPauseBtn" class="video-control-btn" aria-label="Play/Pause video">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M8 5v14l11-7z"/>
+                </svg>
+            </button>
+            <button id="muteBtn" class="video-control-btn" aria-label="Mute/Unmute video">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+                </svg>
+            </button>
+        </div>
+        
+        <!-- Hero Content -->
+        <div class="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
+            <!-- Main Portrait -->
+            <div class="mb-12 relative">
+                <div class="relative w-80 h-80 sm:w-96 sm:h-96 mx-auto rounded-full overflow-hidden shadow-dramatic golden-glow">
+                    <div class="portrait-overlay absolute inset-0 z-10"></div>
+                    <img src="https://i.pinimg.com/originals/d5/c2/85/d5c285048e8e646177f5a3aa546974f8.jpg" alt="Cristiano Ronaldo in iconic pose" class="w-full h-full object-cover" loading="lazy" onerror="this.src='https://images.pexels.com/photos/274506/pexels-photo-274506.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'; this.onerror=null;" />
+                </div>
+                
+                <!-- Floating Elements -->
+                <div class="absolute -top-4 -left-4 w-8 h-8 bg-primary-500 rounded-full floating-element opacity-60"></div>
+                <div class="absolute -bottom-6 -right-6 w-6 h-6 bg-primary-400 rounded-full floating-element opacity-80"></div>
+                <div class="absolute top-1/2 -left-8 w-4 h-4 bg-primary-300 rounded-full floating-element opacity-70"></div>
+            </div>
+            
+            <!-- Main Headline -->
+            <div class="mb-8 reveal-on-scroll">
+                <h1 class="text-5xl sm:text-6xl lg:text-7xl font-playfair font-bold text-white mb-4 leading-tight">
+                    The <span class="text-primary-500">GOAT</span> Legacy
+                </h1>
+                <p class="text-xl sm:text-2xl text-primary-300 font-playfair italic">
+                    Discipline Transformed Into Art
+                </p>
+            </div>
+            
+            <!-- Animated Statistics -->
+            <div class="mb-12 reveal-on-scroll">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
+                    <div class="text-center">
+                        <div class="stat-counter text-4xl sm:text-5xl font-oswald font-medium text-primary-500 mb-2" data-target="895">0</div>
+                        <p class="text-white font-inter text-sm uppercase tracking-wider">Career Goals</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="stat-counter text-4xl sm:text-5xl font-oswald font-medium text-primary-500 mb-2" data-target="5">0</div>
+                        <p class="text-white font-inter text-sm uppercase tracking-wider">Ballon d'Or</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="stat-counter text-4xl sm:text-5xl font-oswald font-medium text-primary-500 mb-2" data-target="32">0</div>
+                        <p class="text-white font-inter text-sm uppercase tracking-wider">Major Trophies</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="stat-counter text-4xl sm:text-5xl font-oswald font-medium text-primary-500 mb-2" data-target="200">0</div>
+                        <p class="text-white font-inter text-sm uppercase tracking-wider">International Caps</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Call to Action -->
+            <div class="reveal-on-scroll">
+                <a href="club_journey.html" class="inline-flex items-center bg-primary-600 hover:bg-primary-500 text-white px-8 py-4 rounded-lg font-inter font-semibold text-lg transition-all duration-300 transform hover:scale-105 shadow-dramatic">
+                    Explore the Journey
+                    <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quote Carousel Section -->
+    <section class="py-20 bg-gradient-to-r from-secondary-800 to-secondary-900 relative overflow-hidden">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal-on-scroll">
+                <h2 class="text-4xl sm:text-5xl font-playfair font-bold text-white mb-4">
+                    Words of <span class="text-primary-500">Greatness</span>
+                </h2>
+                <p class="text-xl text-gray-300 font-inter">
+                    Inspirational messages that define a legend
+                </p>
+            </div>
+            
+            <!-- Quote Carousel -->
+            <div class="quote-carousel relative h-64 sm:h-48 mb-12">
+                <div class="quote-slide active">
+                    <blockquote class="text-center">
+                        <p class="text-2xl sm:text-3xl font-playfair italic text-white mb-6 leading-relaxed">
+                            "Your love makes me strong, your hate makes me unstoppable."
+                        </p>
+                        <footer class="text-primary-400 font-inter font-medium">
+                            — Cristiano Ronaldo
+                        </footer>
+                    </blockquote>
+                </div>
+                
+                <div class="quote-slide">
+                    <blockquote class="text-center">
+                        <p class="text-2xl sm:text-3xl font-playfair italic text-white mb-6 leading-relaxed">
+                            "Dreams are not what you see in your sleep, dreams are things which do not let you sleep."
+                        </p>
+                        <footer class="text-primary-400 font-inter font-medium">
+                            — Cristiano Ronaldo
+                        </footer>
+                    </blockquote>
+                </div>
+                
+                <div class="quote-slide">
+                    <blockquote class="text-center">
+                        <p class="text-2xl sm:text-3xl font-playfair italic text-white mb-6 leading-relaxed">
+                            "Talent without working hard is nothing."
+                        </p>
+                        <footer class="text-primary-400 font-inter font-medium">
+                            — Cristiano Ronaldo
+                        </footer>
+                    </blockquote>
+                </div>
+                
+                <div class="quote-slide">
+                    <blockquote class="text-center">
+                        <p class="text-2xl sm:text-3xl font-playfair italic text-white mb-6 leading-relaxed">
+                            "I'm not a perfectionist, but I like to feel that things are done well."
+                        </p>
+                        <footer class="text-primary-400 font-inter font-medium">
+                            — Cristiano Ronaldo
+                        </footer>
+                    </blockquote>
+                </div>
+            </div>
+            
+            <!-- Carousel Controls -->
+            <div class="flex justify-center space-x-4">
+                <button id="prevQuote" class="bg-secondary-700 hover:bg-secondary-600 text-white p-3 rounded-full transition-colors duration-200" aria-label="Previous quote">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                    </svg>
+                </button>
+                <button id="nextQuote" class="bg-secondary-700 hover:bg-secondary-600 text-white p-3 rounded-full transition-colors duration-200" aria-label="Next quote">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                    </svg>
+                </button>
+            </div>
+            
+            <!-- Quote Indicators -->
+            <div class="flex justify-center mt-6 space-x-2">
+                <button class="quote-indicator w-3 h-3 rounded-full bg-primary-500 transition-all duration-200" data-slide="0"></button>
+                <button class="quote-indicator w-3 h-3 rounded-full bg-gray-600 hover:bg-gray-500 transition-all duration-200" data-slide="1"></button>
+                <button class="quote-indicator w-3 h-3 rounded-full bg-gray-600 hover:bg-gray-500 transition-all duration-200" data-slide="2"></button>
+                <button class="quote-indicator w-3 h-3 rounded-full bg-gray-600 hover:bg-gray-500 transition-all duration-200" data-slide="3"></button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Legacy Narrative Section -->
+    <section class="py-20 bg-gradient-to-br from-secondary-900 via-secondary-800 to-secondary-700">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <!-- Narrative Content -->
+                <div class="reveal-on-scroll">
+                    <h2 class="text-4xl sm:text-5xl font-playfair font-bold text-white mb-8">
+                        Greatness That Transcends <span class="text-primary-500">Generations</span>
+                    </h2>
+                    
+                    <div class="space-y-6 text-lg text-gray-300 font-inter leading-relaxed">
+                        <p>
+                            From the cobblestone streets of Madeira to the grand stages of world football, 
+                            Cristiano Ronaldo's journey embodies the relentless pursuit of impossible standards. 
+                            His story is not merely one of athletic achievement, but of human transformation 
+                            through unwavering dedication.
+                        </p>
+                        
+                        <p>
+                            Every sprint, every goal, every celebration has been crafted through discipline 
+                            that borders on the mythical. This is greatness that transcends borders and 
+                            generations, inspiring millions to believe that excellence is not a destination, 
+                            but a way of life.
+                        </p>
+                        
+                        <p class="text-primary-300 font-medium italic">
+                            "The relentless pursuit of impossible standards has become the art of living."
+                        </p>
+                    </div>
+                    
+                    <div class="mt-8 flex flex-wrap gap-4">
+                        <a href="statistical_monument.html" class="bg-primary-600 hover:bg-primary-500 text-white px-6 py-3 rounded-lg font-inter font-medium transition-all duration-300 transform hover:scale-105">
+                            View Statistics
+                        </a>
+                        <a href="goals_gallery.html" class="bg-secondary-700 hover:bg-secondary-600 text-white px-6 py-3 rounded-lg font-inter font-medium transition-all duration-300 transform hover:scale-105">
+                            Watch Goals
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Visual Content -->
+                <div class="reveal-on-scroll">
+                    <div class="relative">
+                        <div class="aspect-w-4 aspect-h-5 rounded-2xl overflow-hidden shadow-dramatic">
+                            <img src="https://resize.indiatvnews.com/en/centered/newbucket/1200_675/2017/12/cristiano-ronaldo-holding-the-ballon-d-or-golden-ball-he-received-thursday-dec-1512807090.jpg" alt="Cristiano Ronaldo in contemplative moment" class="w-full h-full object-cover" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1574680096145-d05b474e2155?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'; this.onerror=null;" />
+                        </div>
+                        
+                        <!-- Decorative Elements -->
+                        <div class="absolute -top-6 -right-6 w-24 h-24 bg-primary-500 rounded-full opacity-20 floating-element"></div>
+                        <div class="absolute -bottom-4 -left-4 w-16 h-16 bg-primary-400 rounded-full opacity-30 floating-element"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black bg-opacity-30 backdrop-blur-sm border-t border-primary-500 border-opacity-30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Brand -->
+                <div>
+                    <div class="flex items-center mb-4">
+                        <svg class="w-8 h-8 text-primary-500 mr-3" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2L13.09 8.26L20 9L13.09 9.74L12 16L10.91 9.74L4 9L10.91 8.26L12 2Z"/>
+                        </svg>
+                        <span class="text-xl font-playfair font-bold text-white">CR7 Legacy</span>
+                    </div>
+                    <p class="text-gray-300 font-inter text-sm leading-relaxed">
+                        A digital monument celebrating the legendary career and global impact of Cristiano Ronaldo.
+                    </p>
+                </div>
+                
+                <!-- Navigation -->
+                <div>
+                    <h3 class="text-white font-playfair font-bold mb-4">Explore</h3>
+                    <ul class="space-y-2">
+                        <li><a href="hero_tribute.html" class="text-gray-300 hover:text-primary-300 font-inter text-sm transition-colors duration-200">Hero Tribute</a></li>
+                        <li><a href="club_journey.html" class="text-gray-300 hover:text-primary-300 font-inter text-sm transition-colors duration-200">Club Journey</a></li>
+                        <li><a href="statistical_monument.html" class="text-gray-300 hover:text-primary-300 font-inter text-sm transition-colors duration-200">Statistics</a></li>
+                        <li><a href="goals_gallery.html" class="text-gray-300 hover:text-primary-300 font-inter text-sm transition-colors duration-200">Goals Gallery</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Legacy -->
+                <div>
+                    <h3 class="text-white font-playfair font-bold mb-4">Legacy</h3>
+                    <p class="text-gray-300 font-inter text-sm leading-relaxed mb-4">
+                        "Discipline transformed into art, greatness that transcends borders and generations."
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="interactive_landing.html" class="text-gray-300 hover:text-primary-300 transition-colors duration-200">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2L13.09 8.26L20 9L13.09 9.74L12 16L10.91 9.74L4 9L10.91 8.26L12 2Z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400 font-inter text-sm">© 2025 CR7 Legacy. All Rights Reserved.</p>
+                <p class="text-gray-400 font-inter text-sm mt-2 md:mt-0">Celebrating greatness since 1985</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Statistics Counter Animation
+        function animateCounters() {
+            const counters = document.querySelectorAll('.stat-counter');
+            
+            counters.forEach(counter => {
+                const target = parseInt(counter.getAttribute('data-target'));
+                const duration = 2000; // 2 seconds
+                const increment = target / (duration / 16); // 60fps
+                let current = 0;
+                
+                const updateCounter = () => {
+                    if (current < target) {
+                        current += increment;
+                        counter.textContent = Math.floor(current);
+                        requestAnimationFrame(updateCounter);
+                    } else {
+                        counter.textContent = target;
+                        counter.classList.add('animate');
+                        setTimeout(() => counter.classList.remove('animate'), 600);
+                    }
+                };
+                
+                updateCounter();
+            });
+        }
+        
+        // Quote Carousel Functionality
+        let currentQuote = 0;
+        const quotes = document.querySelectorAll('.quote-slide');
+        const indicators = document.querySelectorAll('.quote-indicator');
+        
+        function showQuote(index) {
+            quotes.forEach((quote, i) => {
+                quote.classList.remove('active', 'prev');
+                if (i === index) {
+                    quote.classList.add('active');
+                } else if (i < index) {
+                    quote.classList.add('prev');
+                }
+            });
+            
+            indicators.forEach((indicator, i) => {
+                indicator.classList.toggle('bg-primary-500', i === index);
+                indicator.classList.toggle('bg-gray-600', i !== index);
+            });
+            
+            currentQuote = index;
+        }
+        
+        function nextQuote() {
+            const next = (currentQuote + 1) % quotes.length;
+            showQuote(next);
+        }
+        
+        function prevQuote() {
+            const prev = (currentQuote - 1 + quotes.length) % quotes.length;
+            showQuote(prev);
+        }
+        
+        // Scroll Reveal Animation
+        function revealOnScroll() {
+            const reveals = document.querySelectorAll('.reveal-on-scroll');
+            
+            reveals.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+                
+                if (elementTop < window.innerHeight - elementVisible) {
+                    element.classList.add('revealed');
+                }
+            });
+        }
+        
+        // Video Controls
+        function initVideoControls() {
+            const video = document.getElementById('heroVideo');
+            const playPauseBtn = document.getElementById('playPauseBtn');
+            const muteBtn = document.getElementById('muteBtn');
+            
+            playPauseBtn.addEventListener('click', () => {
+                if (video.paused) {
+                    video.play();
+                    playPauseBtn.innerHTML = '<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>';
+                } else {
+                    video.pause();
+                    playPauseBtn.innerHTML = '<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';
+                }
+            });
+            
+            muteBtn.addEventListener('click', () => {
+                video.muted = !video.muted;
+                muteBtn.innerHTML = video.muted 
+                    ? '<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>'
+                    : '<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>';
+            });
+        }
+        
+        // Mobile Menu Toggle
+        function initializeMobileMenu() {
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+            
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+        
+        // Initialize everything
+        document.addEventListener('DOMContentLoaded', () => {
+            // Start counter animation after a delay
+            setTimeout(animateCounters, 1000);
+            
+            // Quote carousel controls
+            document.getElementById('nextQuote').addEventListener('click', nextQuote);
+            document.getElementById('prevQuote').addEventListener('click', prevQuote);
+            
+            // Quote indicators
+            indicators.forEach((indicator, index) => {
+                indicator.addEventListener('click', () => showQuote(index));
+            });
+            
+            // Auto-rotate quotes
+            setInterval(nextQuote, 5000);
+            
+            // Initialize other features
+            initVideoControls();
+            initializeMobileMenu();
+            
+            // Initial scroll reveal check
+            revealOnScroll();
+        });
+        
+        // Scroll event listener
+        window.addEventListener('scroll', revealOnScroll);
+        
+        // Intersection Observer for better performance
+        if ('IntersectionObserver' in window) {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('revealed');
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            document.querySelectorAll('.reveal-on-scroll').forEach(el => {
+                observer.observe(el);
+            });
+        }
+    </script>
+<script id="dhws-dataInjector" src="../public/dhws-data-injector.js"></script>
+</body>
+</html>

@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Goals Gallery - CR7 Legacy</title>
+    <meta name="description" content="Explore Cristiano Ronaldo's most iconic goals and celebrations through an immersive video gallery showcasing legendary moments that defined football history." />
+    <link rel="stylesheet" href="../css/main.css" />
+    <style>
+        /* Video Gallery Animations */
+        .video-card {
+            transition: all 0.3s ease;
+            transform: translateY(0);
+        }
+        
+        .video-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .video-thumbnail {
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+        }
+        
+        .video-thumbnail::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(212, 175, 55, 0.1) 0%, rgba(30, 58, 138, 0.1) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 1;
+        }
+        
+        .video-card:hover .video-thumbnail::before {
+            opacity: 1;
+        }
+        
+        .play-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 2;
+        }
+        
+        .video-card:hover .play-overlay {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+        
+        /* Filter Animation */
+        .filter-btn {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .filter-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .filter-btn:hover::before {
+            left: 100%;
+        }
+        
+        /* Video Player Modal */
+        .video-modal {
+            backdrop-filter: blur(20px);
+            background: rgba(0, 0, 0, 0.95);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s ease;
+        }
+        
+        .video-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .video-player-container {
+            transform: scale(0.8);
+            transition: transform 0.4s ease;
+        }
+        
+        .video-modal.active .video-player-container {
+            transform: scale(1);
+        }
+        
+        /* Custom Video Controls */
+        .custom-controls {
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, transparent 100%);
+        }
+        
+        .progress-bar {
+            background: rgba(255, 255, 255, 0.3);
+            height: 4px;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            background: linear-gradient(90deg, #D4AF37, #FBBF24);
+            height: 100%;
+            width: 0%;
+            transition: width 0.1s ease;
+        }
+        
+        /* Masonry Grid */
+        .masonry-grid {
+            column-count: 1;
+            column-gap: 1.5rem;
+        }
+        
+        @media (min-width: 640px) {
+            .masonry-grid {
+                column-count: 2;
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .masonry-grid {
+                column-count: 3;
+            }
+        }
+        
+        @media (min-width: 1280px) {
+            .masonry-grid {
+                column-count: 4;
+            }
+        }
+        
+        .masonry-item {
+            break-inside: avoid;
+            margin-bottom: 1.5rem;
+        }
+        
+        /* Loading Animation */
+        .loading-shimmer {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: shimmer 2s infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        
+        /* Share Button Animation */
+        .share-btn {
+            transform: scale(0);
+            transition: transform 0.3s ease;
+        }
+        
+        .video-card:hover .share-btn {
+            transform: scale(1);
+        }
+    </style>
+<script type="module" src="https://static.rocket.new/rocket-web.js?_cfg=https%3A%2F%2Fcr7legacy3967back.builtwithrocket.new&_be=https%3A%2F%2Fapplication.rocket.new&_v=0.1.8"></script>
+</head>
+<body class="bg-gradient-to-br from-secondary-900 via-secondary-800 to-secondary-700 min-h-screen">
+    <!-- Navigation Header -->
+    <nav class="relative z-20 bg-black bg-opacity-20 backdrop-blur-sm border-b border-primary-500 border-opacity-30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <svg class="w-10 h-10 text-primary-500" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2L13.09 8.26L20 9L13.09 9.74L12 16L10.91 9.74L4 9L10.91 8.26L12 2Z"/>
+                    </svg>
+                    <span class="ml-3 text-xl font-playfair font-bold text-white">CR7 Legacy</span>
+                </div>
+                
+                <!-- Navigation Links -->
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="interactive_landing.html" class="text-white hover:text-primary-300 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">Landing</a>
+                        <a href="hero_tribute.html" class="text-white hover:text-primary-300 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">Tribute</a>
+                        <a href="club_journey.html" class="text-white hover:text-primary-300 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">Journey</a>
+                        <a href="statistical_monument.html" class="text-white hover:text-primary-300 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">Stats</a>
+                        <a href="goals_gallery.html" class="text-primary-400 hover:text-primary-300 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 border-b-2 border-primary-500">Gallery</a>
+                    </div>
+                </div>
+                
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button id="mobileMenuBtn" class="text-white hover:text-primary-300 focus:outline-none focus:text-primary-300">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile menu -->
+        <div id="mobileMenu" class="md:hidden hidden bg-black bg-opacity-40 backdrop-blur-sm">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="interactive_landing.html" class="text-white hover:text-primary-300 block px-3 py-2 rounded-md text-base font-medium">Landing</a>
+                <a href="hero_tribute.html" class="text-white hover:text-primary-300 block px-3 py-2 rounded-md text-base font-medium">Tribute</a>
+                <a href="club_journey.html" class="text-white hover:text-primary-300 block px-3 py-2 rounded-md text-base font-medium">Journey</a>
+                <a href="statistical_monument.html" class="text-white hover:text-primary-300 block px-3 py-2 rounded-md text-base font-medium">Stats</a>
+                <a href="goals_gallery.html" class="text-primary-400 block px-3 py-2 rounded-md text-base font-medium border-l-4 border-primary-500">Gallery</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative py-20 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto text-center">
+            <div class="mb-8">
+                <h1 class="text-5xl sm:text-6xl lg:text-7xl font-playfair font-bold text-white mb-6">
+                    Goals <span class="text-primary-400">Gallery</span>
+                </h1>
+                <p class="text-xl text-gray-300 font-inter max-w-3xl mx-auto leading-relaxed">
+                    Witness the legendary moments that defined football history. From bicycle kicks to last-minute winners, 
+                    explore the iconic goals and celebrations that made Cristiano Ronaldo a global phenomenon.
+                </p>
+            </div>
+            
+            <!-- Statistics Bar -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto mb-12">
+                <div class="bg-black bg-opacity-30 backdrop-blur-sm rounded-lg p-4 border border-primary-500 border-opacity-30">
+                    <div class="text-3xl font-oswald font-medium text-primary-400">945+</div>
+                    <div class="text-sm text-gray-300 font-inter">Career Goals</div>
+                </div>
+                <div class="bg-black bg-opacity-30 backdrop-blur-sm rounded-lg p-4 border border-primary-500 border-opacity-30">
+                    <div class="text-3xl font-oswald font-medium text-primary-400">140+</div>
+                    <div class="text-sm text-gray-300 font-inter">International Goals</div>
+                </div>
+                <div class="bg-black bg-opacity-30 backdrop-blur-sm rounded-lg p-4 border border-primary-500 border-opacity-30">
+                    <div class="text-3xl font-oswald font-medium text-primary-400">450+</div>
+                    <div class="text-sm text-gray-300 font-inter">Real Madrid Goals</div>
+                </div>
+                <div class="bg-black bg-opacity-30 backdrop-blur-sm rounded-lg p-4 border border-primary-500 border-opacity-30">
+                    <div class="text-3xl font-oswald font-medium text-primary-400">15+</div>
+                    <div class="text-sm text-gray-300 font-inter">Champions League Finals</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Filter Section -->
+    <section class="py-8 px-4 sm:px-6 lg:px-8 border-b border-primary-500 border-opacity-20">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col lg:flex-row justify-between items-center gap-6">
+                <!-- Filter Buttons -->
+                <div class="flex flex-wrap justify-center lg:justify-start gap-3">
+                    <button class="filter-btn bg-primary-600 text-white px-6 py-2 rounded-full font-inter font-medium text-sm transition-all duration-300 hover:bg-primary-500 active" data-filter="all">
+                        All Goals
+                    </button>
+                    <button class="filter-btn bg-secondary-700 hover:bg-secondary-600 text-white px-6 py-2 rounded-full font-inter font-medium text-sm" data-filter="real-madrid">
+                        Real Madrid
+                    </button>
+                    <button class="filter-btn bg-secondary-700 hover:bg-secondary-600 text-white px-6 py-2 rounded-full font-inter font-medium text-sm" data-filter="manchester-united">
+                        Manchester United
+                    </button>
+                    <button class="filter-btn bg-secondary-700 hover:bg-secondary-600 text-white px-6 py-2 rounded-full font-inter font-medium text-sm" data-filter="juventus">
+                        Juventus
+                    </button>
+                    <button class="filter-btn bg-secondary-700 hover:bg-secondary-600 text-white px-6 py-2 rounded-full font-inter font-medium text-sm" data-filter="portugal">
+                        Portugal
+                    </button>
+                    <button class="filter-btn bg-secondary-700 hover:bg-secondary-600 text-white px-6 py-2 rounded-full font-inter font-medium text-sm" data-filter="champions-league">
+                        Champions League
+                    </button>
+                </div>
+                
+                <!-- Search and Sort -->
+                <div class="flex items-center gap-4">
+                    <div class="relative">
+                        <input type="text" id="searchInput" placeholder="Search goals..." class="bg-black bg-opacity-30 backdrop-blur-sm border border-primary-500 border-opacity-30 rounded-lg px-4 py-2 pl-10 text-white placeholder-gray-400 focus:outline-none focus:border-primary-400 w-64" />
+                        <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                        </svg>
+                    </div>
+                    <select id="sortSelect" class="bg-black bg-opacity-30 backdrop-blur-sm border border-primary-500 border-opacity-30 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-primary-400">
+                        <option value="newest">Newest First</option>
+                        <option value="oldest">Oldest First</option>
+                        <option value="most-viewed">Most Viewed</option>
+                        <option value="alphabetical">Alphabetical</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Goals Gallery -->
+    <section class="py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
+            <!-- Loading State -->
+            <div id="loadingState" class="hidden">
+                <div class="masonry-grid">
+                    <!-- Loading Skeletons -->
+                    <div class="masonry-item">
+                        <div class="loading-shimmer rounded-lg h-64 mb-4"></div>
+                    </div>
+                    <div class="masonry-item">
+                        <div class="loading-shimmer rounded-lg h-80 mb-4"></div>
+                    </div>
+                    <div class="masonry-item">
+                        <div class="loading-shimmer rounded-lg h-72 mb-4"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video Gallery Grid -->
+            <div id="videoGallery" class="masonry-grid">
+                <!-- Video Card 1 - Bicycle Kick vs Juventus -->
+                <div class="masonry-item video-card" data-category="real-madrid champions-league" data-year="2018" data-title="Bicycle Kick vs Juventus">
+                    <div class="bg-black bg-opacity-40 backdrop-blur-sm rounded-lg overflow-hidden border border-primary-500 border-opacity-20">
+                        <div class="video-thumbnail aspect-video relative">
+                            <img src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?q=80&w=1993&auto=format&fit=crop&ixlib=rb-4.0.3" alt="Bicycle Kick vs Juventus" class="w-full h-full object-cover" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1584824486509-112e4181ff6b?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'; this.onerror=null;" />
+                            
+                            <div class="play-overlay">
+                                <svg class="w-6 h-6 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M8 5v14l11-7z"/>
+                                </svg>
+                            </div>
+                            
+                            <div class="absolute top-3 right-3 share-btn">
+                                <button class="bg-black bg-opacity-60 hover:bg-opacity-80 text-white rounded-full p-2 transition-all duration-200">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            
+                            <div class="absolute bottom-3 left-3 bg-primary-600 text-white px-2 py-1 rounded text-xs font-inter font-medium">
+                                2:14
+                            </div>
+                        </div>
+                        
+                        <div class="p-4">
+                            <h3 class="text-lg font-playfair font-bold text-white mb-2">Bicycle Kick vs Juventus</h3>
+                            <p class="text-gray-300 text-sm font-inter mb-3">Champions League Quarter-Final • April 3, 2018</p>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center space-x-4 text-xs text-gray-400">
+                                    <span class="flex items-center">
+                                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                        </svg>
+                                        2.4M views
+                                    </span>
+                                    <span class="flex items-center">
+                                        <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                                        </svg>
+                                        89K
+                                    </span>
+                                </div>
+                                <span class="bg-accent-600 text-white px-2 py-1 rounded text-xs font-inter font-medium">Iconic</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Video Card 2 - Free Kick vs Portsmouth -->
+                <div class="masonry-item video-card" data-category="manchester-united" data-year="2008" data-title="Free Kick vs Portsmouth">
+                    <div class="bg-black bg-opacity-40 backdrop-blur-sm rounded-lg overflow-hidden border border-primary-500 border-opacity-20">
+                        <div class="video-thumbnail aspect-video relative">
+                            <img src="https://images.pexels.com/photos/274506/pexels-photo-274506.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Free Kick vs Portsmouth" class="w-full h-full object-cover" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1584824486509-112e4181ff6b?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'; this.onerror=null;" />
+                            
+                            <div class="play-overlay">
+                                <svg class="w-6 h-6 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M8 5v14l11-7z"/>
+                                </svg>
+                            </div>
+                            
+                            <div class="absolute top-3 right-3 share-btn">
+                                <button class="bg-black bg-opacity-60 hover:bg-opacity-80 text-white rounded-full p-2 transition-all duration-200">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            
+                            <div class="absolute bottom-3 left-3 bg-primary-600 text-white px-2 py-1 rounded text-xs font-inter font-medium">
+                                1:45
+                            </div>
+                        </div>
+                        
+                        <div class="p-4">
+                            <h3 class="text-lg font-playfair font-bold text-white mb-2">30-Yard Free Kick vs Portsmouth</h3>
+                            <p class="text-gray-300 text-sm font-inter mb-3">Premier League • January 30, 2008</p>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center space-x-4 text-xs text-gray-400">
+                                    <span class="flex items-center">
+                                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                        </svg>
+                                        1.8M views
+                                    </span>
+                                    <span class="flex items-center">
+                                        <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                                        </svg>
+                                        67K
+                                    </span>
+                                </div>
+                                <span class="bg-accent-600 text-white px-2 py-1 rounded text-xs font-inter font-medium">Classic</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Video Card 3 - Hat-trick vs Spain -->
+                <div class="masonry-item video-card" data-category="portugal" data-year="2018" data-title="Hat-trick vs Spain">
+                    <div class="bg-black bg-opacity-40 backdrop-blur-sm rounded-lg overflow-hidden border border-primary-500 border-opacity-20">
+                        <div class="video-thumbnail aspect-video relative">
+                            <img src="https://images.pixabay.com/photo/2016/06/03/13/57/digital-marketing-1433427_1280.jpg" alt="Hat-trick vs Spain" class="w-full h-full object-cover" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1584824486509-112e4181ff6b?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'; this.onerror=null;" />
+                            
+                            <div class="play-overlay">
+                                <svg class="w-6 h-6 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M8 5v14l11-7z"/>
+                                </svg>
+                            </div>
+                            
+                            <div class="absolute top-3 right-3 share-btn">
+                                <button class="bg-black bg-opacity-60 hover:bg-opacity-80 text-white rounded-full p-2 transition-all duration-200">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            
+                            <div class="absolute bottom-3 left-3 bg-primary-600 text-white px-2 py-1 rounded text-xs font-inter font-medium">
+                                3:22
+                            </div>
+                        </div>
+                        
+                        <div class="p-4">
+                            <h3 class="text-lg font-playfair font-bold text-white mb-2">Perfect Hat-trick vs Spain</h3>
+                            <p class="text-gray-300 text-sm font-inter mb-3">World Cup 2018 • June 15, 2018</p>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center space-x-4 text-xs text-gray-400">
+                                    <span class="flex items-center">
+                                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                        </svg>
+                                        5.2M views
+                                    </span>
+                                    <span class="flex items-center">
+                                        <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                                        </svg>
+                                        156K
+                                    </span>
+                                </div>
+                                <span class="bg-success-600 text-white px-2 py-1 rounded text-xs font-inter font-medium">World Cup</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Video Card 4 - Champions League Final Goal -->
+                <div class="masonry-item video-card" data-category="real-madrid champions-league" data-year="2017" data-title="Champions League Final Goal">
+                    <div class="bg-black bg-opacity-40 backdrop-blur-sm rounded-lg overflow-hidden border border-primary-500 border-opacity-20">
+                        <div class="video-thumbnail aspect-video relative">
+                            <img src="https://images.unsplash.com/photo-1551698618-1dfe5d97d256?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3" alt="Champions League Final Goal" class="w-full h-full object-cover" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1584824486509-112e4181ff6b?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'; this.onerror=null;" />
+                            
+                            <div class="play-overlay">
+                                <svg class="w-6 h-6 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M8 5v14l11-7z"/>
+                                </svg>
+                            </div>
+                            
+                            <div class="absolute top-3 right-3 share-btn">
+                                <button class="bg-black bg-opacity-60 hover:bg-opacity-80 text-white rounded-full p-2 transition-all duration-200">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            
+                            <div class="absolute bottom-3 left-3 bg-primary-600 text-white px-2 py-1 rounded text-xs font-inter font-medium">
+                                2:08
+                            </div>
+                        </div>
+                        
+                        <div class="p-4">
+                            <h3 class="text-lg font-playfair font-bold text-white mb-2">Champions League Final Double</h3>
+                            <p class="text-gray-300 text-sm font-inter mb-3">vs Juventus • June 3, 2017</p>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center space-x-4 text-xs text-gray-400">
+                                    <span class="flex items-center">
+                                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                        </svg>
+                                        3.1M views
+                                    </span>
+                                    <span class="flex items-center">
+                                        <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                                        </svg>
+                                        98K
+                                    </span>
+                                </div>
+                                <span class="bg-primary-600 text-white px-2 py-1 rounded text-xs font-inter font-medium">Final</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Video Card 5 - Juventus Debut -->
+                <div class="masonry-item video-card" data-category="juventus" data-year="2018" data-title="Juventus Debut Goal">
+                    <div class="bg-black bg-opacity-40 backdrop-blur-sm rounded-lg overflow-hidden border border-primary-500 border-opacity-20">
+                        <div class="video-thumbnail aspect-video relative">
+                            <img src="https://images.pexels.com/photos/1884574/pexels-photo-1884574.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Juventus Debut Goal" class="w-full h-full object-cover" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1584824486509-112e4181ff6b?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'; this.onerror=null;" />
+                            
+                            <div class="play-overlay">
+                                <svg class="w-6 h-6 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M8 5v14l11-7z"/>
+                                </svg>
+                            </div>
+                            
+                            <div class="absolute top-3 right-3 share-btn">
+                                <button class="bg-black bg-opacity-60 hover:bg-opacity-80 text-white rounded-full p-2 transition-all duration-200">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            
+                            <div class="absolute bottom-3 left-3 bg-primary-600 text-white px-2 py-1 rounded text-xs font-inter font-medium">
+                                1:33
+                            </div>
+                        </div>
+                        
+                        <div class="p-4">
+                            <h3 class="text-lg font-playfair font-bold text-white mb-2">First Juventus Goal</h3>
+                            <p class="text-gray-300 text-sm font-inter mb-3">vs Sassuolo • September 16, 2018</p>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center space-x-4 text-xs text-gray-400">
+                                    <span class="flex items-center">
+                                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                        </svg>
+                                        1.2M views
+                                    </span>
+                                    <span class="flex items-center">
+                                        <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                                        </svg>
+                                        45K
+                                    </span>
+                                </div>
+                                <span class="bg-secondary-600 text-white px-2 py-1 rounded text-xs font-inter font-medium">Debut</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Video Card 6 - El Clasico Goal -->
+                <div class="masonry-item video-card" data-category="real-madrid" data-year="2017" data-title="El Clasico Goal">
+                    <div class="bg-black bg-opacity-40 backdrop-blur-sm rounded-lg overflow-hidden border border-primary-500 border-opacity-20">
+                        <div class="video-thumbnail aspect-video relative">
+                            <img src="https://images.pixabay.com/photo/2013/07/12/15/36/motorsports-150157_1280.png" alt="El Clasico Goal" class="w-full h-full object-cover" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1584824486509-112e4181ff6b?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'; this.onerror=null;" />
+                            
+                            <div class="play-overlay">
+                                <svg class="w-6 h-6 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M8 5v14l11-7z"/>
+                                </svg>
+                            </div>
+                            
+                            <div class="absolute top-3 right-3 share-btn">
+                                <button class="bg-black bg-opacity-60 hover:bg-opacity-80 text-white rounded-full p-2 transition-all duration-200">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            
+                            <div class="absolute bottom-3 left-3 bg-primary-600 text-white px-2 py-1 rounded text-xs font-inter font-medium">
+                                1:56
+                            </div>
+                        </div>
+                        
+                        <div class="p-4">
+                            <h3 class="text-lg font-playfair font-bold text-white mb-2">El Clasico Winner</h3>
+                            <p class="text-gray-300 text-sm font-inter mb-3">vs Barcelona • April 23, 2017</p>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center space-x-4 text-xs text-gray-400">
+                                    <span class="flex items-center">
+                                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                        </svg>
+                                        4.7M views
+                                    </span>
+                                    <span class="flex items-center">
+                                        <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                                        </svg>
+                                        187K
+                                    </span>
+                                </div>
+                                <span class="bg-accent-600 text-white px-2 py-1 rounded text-xs font-inter font-medium">El Clasico</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Load More Button -->
+            <div class="text-center mt-12">
+                <button id="loadMoreBtn" class="bg-primary-600 hover:bg-primary-500 text-white px-8 py-3 rounded-lg font-inter font-medium transition-all duration-300 transform hover:scale-105 shadow-subtle">
+                    Load More Goals
+                    <svg class="w-5 h-5 ml-2 inline-block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Player Modal -->
+    <div id="videoModal" class="video-modal fixed inset-0 z-50 flex items-center justify-center p-4">
+        <div class="video-player-container relative bg-black rounded-2xl overflow-hidden shadow-dramatic max-w-6xl w-full">
+            <!-- Close Button -->
+            <button id="closeVideoModal" class="absolute top-4 right-4 z-20 bg-black bg-opacity-50 hover:bg-opacity-70 text-white rounded-full p-3 transition-all duration-200">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+            </button>
+            
+            <!-- Video Player -->
+            <div class="aspect-video bg-gray-900 relative">
+                <video id="modalVideo" class="w-full h-full" controls>
+                    <source src="https://www.youtube.com/embed/A6O67uLJfcQ?si=1QgkIDiSXoyeWH36" type="video/mp4" />
+                    <p class="text-white p-8">Your browser doesn't support video playback.</p>
+                </video>
+                
+                <!-- Custom Controls Overlay -->
+                <div class="custom-controls absolute bottom-0 left-0 right-0 p-6">
+                    <div class="progress-bar mb-4">
+                        <div class="progress-fill"></div>
+                    </div>
+                    <div class="flex items-center justify-between text-white">
+                        <div class="flex items-center space-x-4">
+                            <button id="playPauseBtn" class="hover:text-primary-300 transition-colors duration-200">
+                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M8 5v14l11-7z"/>
+                                </svg>
+                            </button>
+                            <span id="currentTime" class="text-sm">0:00</span>
+                            <span class="text-sm">/</span>
+                            <span id="totalTime" class="text-sm">0:00</span>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <button id="shareVideoBtn" class="hover:text-primary-300 transition-colors duration-200">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"/>
+                                </svg>
+                            </button>
+                            <button id="fullscreenBtn" class="hover:text-primary-300 transition-colors duration-200">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Video Info -->
+            <div class="p-6 bg-gradient-to-r from-secondary-900 to-secondary-800">
+                <h3 id="modalVideoTitle" class="text-2xl font-playfair font-bold text-white mb-2">Video Title</h3>
+                <p id="modalVideoDescription" class="text-gray-300 font-inter mb-4">Video description and match details</p>
+                
+                <div class="flex flex-wrap gap-4">
+                    <button class="bg-primary-600 hover:bg-primary-500 text-white px-4 py-2 rounded-lg text-sm font-inter font-medium transition-colors duration-200">
+                        <svg class="w-4 h-4 inline-block mr-2" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                        </svg>
+                        Like
+                    </button>
+                    <button class="bg-secondary-700 hover:bg-secondary-600 text-white px-4 py-2 rounded-lg text-sm font-inter font-medium transition-colors duration-200">
+                        <svg class="w-4 h-4 inline-block mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"/>
+                        </svg>
+                        Share
+                    </button>
+                    <a href="statistical_monument.html" class="bg-secondary-700 hover:bg-secondary-600 text-white px-4 py-2 rounded-lg text-sm font-inter font-medium transition-colors duration-200">
+                        View Statistics
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="relative z-10 bg-black bg-opacity-30 backdrop-blur-sm border-t border-primary-500 border-opacity-30 mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- Brand -->
+                <div class="col-span-1 md:col-span-2">
+                    <div class="flex items-center mb-4">
+                        <svg class="w-8 h-8 text-primary-500 mr-3" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2L13.09 8.26L20 9L13.09 9.74L12 16L10.91 9.74L4 9L10.91 8.26L12 2Z"/>
+                        </svg>
+                        <span class="text-xl font-playfair font-bold text-white">CR7 Legacy</span>
+                    </div>
+                    <p class="text-gray-300 font-inter text-sm leading-relaxed max-w-md">
+                        Celebrating the legendary career of Cristiano Ronaldo through iconic moments, 
+                        statistical greatness, and the relentless pursuit of excellence that inspires millions worldwide.
+                    </p>
+                </div>
+                
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="text-white font-playfair font-bold mb-4">Explore</h4>
+                    <ul class="space-y-2">
+                        <li><a href="hero_tribute.html" class="text-gray-300 hover:text-primary-300 text-sm font-inter transition-colors duration-200">Hero Tribute</a></li>
+                        <li><a href="club_journey.html" class="text-gray-300 hover:text-primary-300 text-sm font-inter transition-colors duration-200">Club Journey</a></li>
+                        <li><a href="statistical_monument.html" class="text-gray-300 hover:text-primary-300 text-sm font-inter transition-colors duration-200">Statistics</a></li>
+                        <li><a href="goals_gallery.html" class="text-gray-300 hover:text-primary-300 text-sm font-inter transition-colors duration-200">Goals Gallery</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Legacy -->
+                <div>
+                    <h4 class="text-white font-playfair font-bold mb-4">Legacy</h4>
+                    <ul class="space-y-2">
+                        <li><span class="text-gray-300 text-sm font-inter">945+ Career Goals</span></li>
+                        <li><span class="text-gray-300 text-sm font-inter">5 Ballon d'Or Awards</span></li>
+                        <li><span class="text-gray-300 text-sm font-inter">5 Champions League Titles</span></li>
+                        <li><span class="text-gray-300 text-sm font-inter">Global Inspiration</span></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-primary-500 border-opacity-20 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400 text-sm font-inter">© 2025 CR7 Legacy. All Rights Reserved.</p>
+                <div class="flex space-x-6 mt-4 md:mt-0">
+                    <a href="interactive_landing.html" class="text-gray-400 hover:text-primary-300 text-sm font-inter transition-colors duration-200">Landing</a>
+                    <a href="hero_tribute.html" class="text-gray-400 hover:text-primary-300 text-sm font-inter transition-colors duration-200">Tribute</a>
+                    <a href="club_journey.html" class="text-gray-400 hover:text-primary-300 text-sm font-inter transition-colors duration-200">Journey</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        function initializeMobileMenu() {
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+            
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+
+        // Filter Functionality
+        function initializeFilters() {
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const videoCards = document.querySelectorAll('.video-card');
+            const searchInput = document.getElementById('searchInput');
+            const sortSelect = document.getElementById('sortSelect');
+
+            // Filter by category
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    // Update active filter button
+                    filterBtns.forEach(b => {
+                        b.classList.remove('bg-primary-600', 'active');
+                        b.classList.add('bg-secondary-700', 'hover:bg-secondary-600');
+                    });
+                    btn.classList.remove('bg-secondary-700', 'hover:bg-secondary-600');
+                    btn.classList.add('bg-primary-600', 'active');
+
+                    const filter = btn.dataset.filter;
+                    
+                    videoCards.forEach(card => {
+                        if (filter === 'all' || card.dataset.category.includes(filter)) {
+                            card.style.display = 'block';
+                            card.classList.add('animate-fade-in');
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                });
+            });
+
+            // Search functionality
+            searchInput.addEventListener('input', (e) => {
+                const searchTerm = e.target.value.toLowerCase();
+                
+                videoCards.forEach(card => {
+                    const title = card.dataset.title.toLowerCase();
+                    const category = card.dataset.category.toLowerCase();
+                    
+                    if (title.includes(searchTerm) || category.includes(searchTerm)) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+
+            // Sort functionality
+            sortSelect.addEventListener('change', (e) => {
+                const sortBy = e.target.value;
+                const gallery = document.getElementById('videoGallery');
+                const cards = Array.from(videoCards);
+
+                cards.sort((a, b) => {
+                    switch (sortBy) {
+                        case 'newest':
+                            return parseInt(b.dataset.year) - parseInt(a.dataset.year);
+                        case 'oldest':
+                            return parseInt(a.dataset.year) - parseInt(b.dataset.year);
+                        case 'alphabetical':
+                            return a.dataset.title.localeCompare(b.dataset.title);
+                        case 'most-viewed':
+                            // Simulate view counts for sorting
+                            const viewsA = parseInt(a.querySelector('.flex span').textContent.replace(/[^\d]/g, ''));
+                            const viewsB = parseInt(b.querySelector('.flex span').textContent.replace(/[^\d]/g, ''));
+                            return viewsB - viewsA;
+                        default:
+                            return 0;
+                    }
+                });
+
+                // Re-append sorted cards
+                cards.forEach(card => gallery.appendChild(card.parentElement));
+            });
+        }
+
+        // Video Modal Functionality
+        function initializeVideoModal() {
+            const videoCards = document.querySelectorAll('.video-card');
+            const videoModal = document.getElementById('videoModal');
+            const modalVideo = document.getElementById('modalVideo');
+            const modalTitle = document.getElementById('modalVideoTitle');
+            const modalDescription = document.getElementById('modalVideoDescription');
+            const closeBtn = document.getElementById('closeVideoModal');
+            const playPauseBtn = document.getElementById('playPauseBtn');
+            const shareVideoBtn = document.getElementById('shareVideoBtn');
+            const fullscreenBtn = document.getElementById('fullscreenBtn');
+
+            // Open video modal
+            videoCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    const title = card.dataset.title;
+                    const category = card.dataset.category;
+                    const year = card.dataset.year;
+                    
+                    modalTitle.textContent = title;
+                    modalDescription.textContent = `${category.replace('-', ' ').toUpperCase()} • ${year}`;
+                    
+                    videoModal.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                    
+                    // Play video
+                    modalVideo.play().catch(e => console.log('Video autoplay prevented'));
+                });
+            });
+
+            // Close modal
+            function closeModal() {
+                videoModal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+                modalVideo.pause();
+                modalVideo.currentTime = 0;
+            }
+
+            closeBtn.addEventListener('click', closeModal);
+            videoModal.addEventListener('click', (e) => {
+                if (e.target === videoModal) closeModal();
+            });
+
+            // Escape key to close
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && videoModal.classList.contains('active')) {
+                    closeModal();
+                }
+            });
+
+            // Play/Pause functionality
+            playPauseBtn.addEventListener('click', () => {
+                if (modalVideo.paused) {
+                    modalVideo.play();
+                    playPauseBtn.innerHTML = '<svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/></svg>';
+                } else {
+                    modalVideo.pause();
+                    playPauseBtn.innerHTML = '<svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';
+                }
+            });
+
+            // Share functionality
+            shareVideoBtn.addEventListener('click', () => {
+                if (navigator.share) {
+                    navigator.share({
+                        title: modalTitle.textContent,
+                        text: `Check out this amazing goal by Cristiano Ronaldo: ${modalTitle.textContent}`,
+                        url: window.location.href
+                    });
+                } else {
+                    // Fallback: copy to clipboard
+                    navigator.clipboard.writeText(window.location.href);
+                    alert('Link copied to clipboard!');
+                }
+            });
+
+            // Fullscreen functionality
+            fullscreenBtn.addEventListener('click', () => {
+                if (modalVideo.requestFullscreen) {
+                    modalVideo.requestFullscreen();
+                } else if (modalVideo.webkitRequestFullscreen) {
+                    modalVideo.webkitRequestFullscreen();
+                } else if (modalVideo.msRequestFullscreen) {
+                    modalVideo.msRequestFullscreen();
+                }
+            });
+
+            // Update progress bar
+            modalVideo.addEventListener('timeupdate', () => {
+                const progress = (modalVideo.currentTime / modalVideo.duration) * 100;
+                document.querySelector('.progress-fill').style.width = progress + '%';
+                
+                // Update time display
+                const currentMinutes = Math.floor(modalVideo.currentTime / 60);
+                const currentSeconds = Math.floor(modalVideo.currentTime % 60);
+                const totalMinutes = Math.floor(modalVideo.duration / 60);
+                const totalSeconds = Math.floor(modalVideo.duration % 60);
+                
+                document.getElementById('currentTime').textContent = 
+                    `${currentMinutes}:${currentSeconds.toString().padStart(2, '0')}`;
+                document.getElementById('totalTime').textContent = 
+                    `${totalMinutes}:${totalSeconds.toString().padStart(2, '0')}`;
+            });
+        }
+
+        // Load More Functionality
+        function initializeLoadMore() {
+            const loadMoreBtn = document.getElementById('loadMoreBtn');
+            let loadCount = 0;
+
+            loadMoreBtn.addEventListener('click', () => {
+                // Simulate loading more videos
+                loadMoreBtn.innerHTML = `
+                    <div class="loading-spinner inline-block w-5 h-5 mr-2"></div>
+                    Loading...
+                `;
+
+                setTimeout(() => {
+                    loadCount++;
+                    loadMoreBtn.innerHTML = `
+                        Load More Goals
+                        <svg class="w-5 h-5 ml-2 inline-block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+                        </svg>
+                    `;
+
+                    if (loadCount >= 3) {
+                        loadMoreBtn.textContent = 'All Goals Loaded';
+                        loadMoreBtn.disabled = true;
+                        loadMoreBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                    }
+                }, 1500);
+            });
+        }
+
+        // Share Button Functionality
+        function initializeShareButtons() {
+            const shareButtons = document.querySelectorAll('.share-btn button');
+            
+            shareButtons.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation(); // Prevent video modal from opening
+                    
+                    const card = btn.closest('.video-card');
+                    const title = card.dataset.title;
+                    
+                    if (navigator.share) {
+                        navigator.share({
+                            title: `CR7 Legacy - ${title}`,
+                            text: `Check out this amazing goal by Cristiano Ronaldo: ${title}`,
+                            url: window.location.href
+                        });
+                    } else {
+                        // Fallback: copy to clipboard
+                        navigator.clipboard.writeText(`${window.location.href}#${title.replace(/\s+/g, '-').toLowerCase()}`);
+                        
+                        // Show feedback
+                        const originalHTML = btn.innerHTML;
+                        btn.innerHTML = '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>';
+                        btn.classList.add('bg-success-600');
+                        
+                        setTimeout(() => {
+                            btn.innerHTML = originalHTML;
+                            btn.classList.remove('bg-success-600');
+                        }, 2000);
+                    }
+                });
+            });
+        }
+
+        // Initialize everything when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeMobileMenu();
+            initializeFilters();
+            initializeVideoModal();
+            initializeLoadMore();
+            initializeShareButtons();
+        });
+
+        // Lazy loading for images
+        if ('IntersectionObserver' in window) {
+            const imageObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        img.src = img.dataset.src || img.src;
+                        img.classList.remove('loading-shimmer');
+                        observer.unobserve(img);
+                    }
+                });
+            });
+
+            document.querySelectorAll('img[loading="lazy"]').forEach(img => {
+                imageObserver.observe(img);
+            });
+        }
+    </script>
+<script id="dhws-dataInjector" src="../public/dhws-data-injector.js"></script>
+</body>
+</html>
