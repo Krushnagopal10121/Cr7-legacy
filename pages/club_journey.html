@@ -124,6 +124,7 @@
                         <a href="club_journey.html" class="text-primary-400 hover:text-primary-300 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 border-b-2 border-primary-500">Journey</a>
                         <a href="statistical_monument.html" class="text-white hover:text-primary-300 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">Stats</a>
                         <a href="goals_gallery.html" class="text-white hover:text-primary-300 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">Gallery</a>
+                        <a href="cr7_knowledge_quiz.html" class="text-white hover:text-primary-300 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">Quiz</a>
                     </div>
                 </div>
                 
@@ -146,6 +147,7 @@
                 <a href="club_journey.html" class="text-primary-400 block px-3 py-2 rounded-md text-base font-medium border-l-4 border-primary-500">Journey</a>
                 <a href="statistical_monument.html" class="text-white hover:text-primary-300 block px-3 py-2 rounded-md text-base font-medium">Stats</a>
                 <a href="goals_gallery.html" class="text-white hover:text-primary-300 block px-3 py-2 rounded-md text-base font-medium">Gallery</a>
+                <a href="cr7_knowledge_quiz.html" class="text-white hover:text-primary-300 block px-3 py-2 rounded-md text-base font-medium">Quiz</a>
             </div>
         </div>
     </nav>
@@ -154,14 +156,14 @@
     <section class="relative py-20 overflow-hidden">
         <div class="absolute inset-0 bg-gradient-to-r from-black via-transparent to-black opacity-60"></div>
         <div class="absolute inset-0">
-            <img src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3" alt="Football stadium background" class="w-full h-full object-cover" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1584824486509-112e4181ff6b?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'; this.onerror=null;" />
+        <img src="https://pub-7b628b0caf204f69816c70b4802e4265.r2.dev/Legacy_Poster.jpg" alt="Football stadium background" class="w-full h-full object-cover" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1584824486509-112e4181ff6b?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'; this.onerror=null;" />
         </div>
         
         <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h1 class="text-5xl md:text-7xl font-playfair font-bold text-white mb-6">
                 The <span class="text-primary-400">Legendary</span> Journey
             </h1>
-            <p class="text-xl md:text-2xl text-gray-200 max-w-3xl mx-auto mb-8 font-inter">
+            <p class="text-xl md:text-2xl text-gray-1000 max-w-3xl mx-auto mb-8 font-inter">
                 Six chapters of greatness across the world's most prestigious clubs
             </p>
             <div class="flex items-center justify-center space-x-4 text-primary-300">
@@ -178,57 +180,69 @@
             <div class="flex justify-center">
                 <div class="flex space-x-4 md:space-x-8 overflow-x-auto pb-2">
                     <!-- Sporting CP -->
-                    <button class="club-badge active flex flex-col items-center p-3 rounded-lg transition-all duration-300" data-club="sporting">
-                        <div class="w-12 h-12 bg-green-600 rounded-full flex items-center justify-center mb-2">
-                            <span class="text-white font-bold text-sm">SCP</span>
-                        </div>
-                        <span class="text-xs text-white font-inter">2003-2003</span>
-                    </button>
+                   <button class="club-badge active flex flex-col items-center p-3 rounded-lg transition-all duration-300" data-club="sporting">
+                       <div class="w-12 h-12 rounded-full bg-white flex items-center justify-center mb-2 overflow-hidden">
+                       <img src="https://pub-7b628b0caf204f69816c70b4802e4265.r2.dev/sporting%20cp.png" 
+                       alt="Sporting CP" 
+                       class="w-8 h-8 object-contain">
+                       </div>
+                       <span class="text-xs text-white font-inter">2002–2003</span>
+                       </button>
                     
                     <!-- Manchester United -->
-                    <button class="club-badge flex flex-col items-center p-3 rounded-lg transition-all duration-300" data-club="united">
-                        <div class="w-12 h-12 bg-red-600 rounded-full flex items-center justify-center mb-2">
-                            <span class="text-white font-bold text-sm">MU</span>
-                        </div>
-                        <span class="text-xs text-white font-inter">2003-2009</span>
-                    </button>
+                    <button class="club-badge active flex flex-col items-center p-3 rounded-lg transition-all duration-300" data-club="united">
+                       <div class="w-12 h-12 rounded-full bg-white flex items-center justify-center mb-2 overflow-hidden">
+                       <img src="https://pub-7b628b0caf204f69816c70b4802e4265.r2.dev/Man-u%20logo.png" 
+                       alt="Manchester-united" 
+                       class="w-8 h-8 object-contain">
+                       </div>
+                       <span class="text-xs text-white font-inter">2003–2009</span>
+                       </button>
                     
                     <!-- Real Madrid -->
-                    <button class="club-badge flex flex-col items-center p-3 rounded-lg transition-all duration-300" data-club="madrid">
-                        <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center mb-2">
-                            <span class="text-gray-800 font-bold text-sm">RM</span>
-                        </div>
-                        <span class="text-xs text-white font-inter">2009-2018</span>
-                    </button>
+                    <button class="club-badge active flex flex-col items-center p-3 rounded-lg transition-all duration-300" data-club="madrid">
+                       <div class="w-12 h-12 rounded-full bg-white flex items-center justify-center mb-2 overflow-hidden">
+                       <img src="https://pub-7b628b0caf204f69816c70b4802e4265.r2.dev/Real_Madrid_CF2.png" 
+                       alt="Real-Madrid" 
+                       class="w-8 h-8 object-contain">
+                       </div>
+                       <span class="text-xs text-white font-inter">2009–2018</span>
+                       </button>
                     
                     <!-- Juventus -->
-                    <button class="club-badge flex flex-col items-center p-3 rounded-lg transition-all duration-300" data-club="juventus">
-                        <div class="w-12 h-12 bg-black border-2 border-white rounded-full flex items-center justify-center mb-2">
-                            <span class="text-white font-bold text-sm">JUV</span>
-                        </div>
-                        <span class="text-xs text-white font-inter">2018-2021</span>
-                    </button>
+                    <button class="club-badge active flex flex-col items-center p-3 rounded-lg transition-all duration-300" data-club="juventus">
+                       <div class="w-12 h-12 rounded-full bg-white flex items-center justify-center mb-2 overflow-hidden">
+                       <img src="https://pub-7b628b0caf204f69816c70b4802e4265.r2.dev/Juventus-logo.png" 
+                       alt="Juventus" 
+                       class="w-8 h-8 object-contain">
+                       </div>
+                       <span class="text-xs text-white font-inter">2018–2021</span>
+                       </button>
                     
                     <!-- Manchester United Return -->
-                    <button class="club-badge flex flex-col items-center p-3 rounded-lg transition-all duration-300" data-club="united-return">
-                        <div class="w-12 h-12 bg-red-600 rounded-full flex items-center justify-center mb-2">
-                            <span class="text-white font-bold text-sm">MU</span>
-                        </div>
-                        <span class="text-xs text-white font-inter">2021-2022</span>
-                    </button>
+                    <button class="club-badge active flex flex-col items-center p-3 rounded-lg transition-all duration-300" data-club="united-return">
+                       <div class="w-12 h-12 rounded-full bg-white flex items-center justify-center mb-2 overflow-hidden">
+                       <img src="https://pub-7b628b0caf204f69816c70b4802e4265.r2.dev/Man-u%20logo.png" 
+                       alt="Manchester-united" 
+                       class="w-8 h-8 object-contain">
+                       </div>
+                       <span class="text-xs text-white font-inter">2021–2022</span>
+                       </button>
                     
                     <!-- Al Nassr -->
-                    <button class="club-badge flex flex-col items-center p-3 rounded-lg transition-all duration-300" data-club="alnassr">
-                        <div class="w-12 h-12 bg-yellow-500 rounded-full flex items-center justify-center mb-2">
-                            <span class="text-black font-bold text-sm">AN</span>
-                        </div>
-                        <span class="text-xs text-white font-inter">2023-Present</span>
-                    </button>
-                </div>
-            </div>
-            <div class="progress-bar mt-2"></div>
-        </div>
-    </section>
+                   <button class="club-badge active flex flex-col items-center p-3 rounded-lg transition-all duration-300" data-club="alnassr">
+                       <div class="w-12 h-12 rounded-full bg-white flex items-center justify-center mb-2 overflow-hidden">
+                       <img src="https://pub-7b628b0caf204f69816c70b4802e4265.r2.dev/Alnassr_FC_Logo.png" 
+                       alt="Al Nassr FC" 
+                       class="w-8 h-8 object-contain">
+                       </div>
+                       <span class="text-xs text-white font-inter">2023–Present</span>
+                       </button>
+                       </div>
+                       </div>
+                       <div class="progress-bar mt-2"></div>
+                       </div>
+                       </section>
 
     <!-- Club Sections Container -->
     <div class="timeline-container">
@@ -238,14 +252,16 @@
                 <div class="grid lg:grid-cols-2 gap-12 items-center">
                     <div class="text-white">
                         <div class="flex items-center mb-6">
-                            <div class="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center mr-4">
-                                <span class="text-white font-bold text-xl">SCP</span>
-                            </div>
-                            <div>
-                                <h2 class="text-4xl md:text-5xl font-playfair font-bold">Sporting CP</h2>
-                                <p class="text-xl text-green-200 font-inter">The Beginning • 2003</p>
-                            </div>
-                        </div>
+                         <div class="w-16 h-16 rounded-full bg-white flex items-center justify-center mr-4 overflow-hidden">
+                          <img src="https://pub-7b628b0caf204f69816c70b4802e4265.r2.dev/sporting%20cp.png" 
+                           alt="Sporting CP" 
+                           class="w-10 h-10 object-contain">
+                           </div>
+                          <div>
+                          <h2 class="text-4xl md:text-5xl font-playfair font-bold">Sporting CP</h2>
+                          <p class="text-xl text-green-200 font-inter">The Beginning • 2002</p>
+                          </div>
+                      </div>
                         
                         <p class="text-lg mb-8 leading-relaxed font-inter">
                             Where legends are born. At just 18 years old, Cristiano made his professional debut with Sporting CP, 
@@ -270,7 +286,7 @@
                     </div>
                     
                     <div class="relative">
-                        <img src="https://images.unsplash.com/photo-1551698618-1dfe5d97d256?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3" alt="Young Cristiano Ronaldo at Sporting CP" class="w-full h-96 object-cover rounded-2xl shadow-dramatic" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1584824486509-112e4181ff6b?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'; this.onerror=null;" />
+                        <img src="https://s2.dmcdn.net/v/YMc9Y1e7wg7YZ3TEl/x1080" alt="Young Cristiano Ronaldo at Sporting CP" class="w-full h-96 object-cover rounded-2xl shadow-dramatic" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1584824486509-112e4181ff6b?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'; this.onerror=null;" />
                         <div class="absolute -bottom-6 -right-6 bg-primary-500 text-white p-4 rounded-lg shadow-dramatic">
                             <p class="font-playfair font-bold text-lg">The Genesis</p>
                             <p class="text-sm font-inter">Professional Debut</p>
@@ -285,7 +301,7 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="grid lg:grid-cols-2 gap-12 items-center">
                     <div class="order-2 lg:order-1 relative">
-                        <img src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3" alt="Cristiano Ronaldo at Manchester United" class="w-full h-96 object-cover rounded-2xl shadow-dramatic" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1584824486509-112e4181ff6b?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'; this.onerror=null;" />
+                        <img src="https://pbs.twimg.com/media/E90BnR4XsAEsNWK?format=jpg&name=4096x4096" alt="Cristiano Ronaldo at Manchester United" class="w-full h-96 object-cover rounded-2xl shadow-dramatic" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1584824486509-112e4181ff6b?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'; this.onerror=null;" />
                         <div class="absolute -bottom-6 -left-6 bg-accent-600 text-white p-4 rounded-lg shadow-dramatic">
                             <p class="font-playfair font-bold text-lg">Theatre of Dreams</p>
                             <p class="text-sm font-inter">First Golden Era</p>
@@ -294,9 +310,11 @@
                     
                     <div class="order-1 lg:order-2 text-white">
                         <div class="flex items-center mb-6">
-                            <div class="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center mr-4">
-                                <span class="text-white font-bold text-xl">MU</span>
-                            </div>
+                            <div class="w-16 h-16 rounded-full bg-white flex items-center justify-center mr-4 overflow-hidden">
+                              <img src="https://pub-7b628b0caf204f69816c70b4802e4265.r2.dev/Man-u%20logo.png" 
+                                alt="Manchester United" 
+                                class="w-10 h-10 object-contain">
+                              </div>
                             <div>
                                 <h2 class="text-4xl md:text-5xl font-playfair font-bold">Manchester United</h2>
                                 <p class="text-xl text-red-200 font-inter">The Rise • 2003-2009</p>
@@ -315,7 +333,7 @@
                                 <p class="text-xs text-red-200 font-inter">Appearances</p>
                             </div>
                             <div class="achievement-card p-4 rounded-lg text-center">
-                                <h3 class="text-xl font-playfair font-bold text-primary-400 mb-1">118</h3>
+                                <h3 class="text-xl font-playfair font-bold text-primary-400 mb-1">128</h3>
                                 <p class="text-xs text-red-200 font-inter">Goals</p>
                             </div>
                             <div class="achievement-card p-4 rounded-lg text-center">
@@ -344,9 +362,11 @@
                 <div class="grid lg:grid-cols-2 gap-12 items-center">
                     <div class="text-gray-800">
                         <div class="flex items-center mb-6">
-                            <div class="w-16 h-16 bg-white border-2 border-gray-300 rounded-full flex items-center justify-center mr-4">
-                                <span class="text-gray-800 font-bold text-xl">RM</span>
-                            </div>
+                            <div class="w-16 h-16 rounded-full bg-white flex items-center justify-center mr-4 overflow-hidden">
+                              <img src="https://pub-7b628b0caf204f69816c70b4802e4265.r2.dev/Real_Madrid_CF2.png" 
+                              alt="Real Madrid" 
+                              class="w-10 h-10 object-contain">
+                               </div>
                             <div>
                                 <h2 class="text-4xl md:text-5xl font-playfair font-bold">Real Madrid</h2>
                                 <p class="text-xl text-gray-600 font-inter">The Legend • 2009-2018</p>
@@ -386,7 +406,7 @@
                     </div>
                     
                     <div class="relative">
-                        <img src="https://images.pexels.com/photos/274506/pexels-photo-274506.jpeg?auto=compress&cs=tinysrgb&w=2940" alt="Cristiano Ronaldo at Real Madrid" class="w-full h-96 object-cover rounded-2xl shadow-dramatic" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1584824486509-112e4181ff6b?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'; this.onerror=null;" />
+                        <img src="https://pub-7b628b0caf204f69816c70b4802e4265.r2.dev/Cr7-5ucl.jpeg" alt="Cristiano Ronaldo at Real Madrid" class="w-full h-96 object-cover rounded-2xl shadow-dramatic" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1584824486509-112e4181ff6b?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'; this.onerror=null;" />
                         <div class="absolute -bottom-6 -right-6 bg-primary-600 text-white p-4 rounded-lg shadow-dramatic">
                             <p class="font-playfair font-bold text-lg">Hala Madrid</p>
                             <p class="text-sm font-inter">Peak Performance</p>
@@ -401,7 +421,7 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="grid lg:grid-cols-2 gap-12 items-center">
                     <div class="order-2 lg:order-1 relative">
-                        <img src="https://images.pixabay.com/photo/2016/11/29/08/41/soccer-1868924_1280.jpg" alt="Cristiano Ronaldo at Juventus" class="w-full h-96 object-cover rounded-2xl shadow-dramatic" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1584824486509-112e4181ff6b?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'; this.onerror=null;" />
+                        <img src="https://ichef.bbci.co.uk/ace/standard/624/cpsprodpb/0FE2/production/_106066040_ronaldo_epa.jpg" alt="Cristiano Ronaldo at Juventus" class="w-full h-96 object-cover rounded-2xl shadow-dramatic" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1584824486509-112e4181ff6b?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'; this.onerror=null;" />
                         <div class="absolute -bottom-6 -left-6 bg-gray-800 text-white p-4 rounded-lg shadow-dramatic">
                             <p class="font-playfair font-bold text-lg">Fino Alla Fine</p>
                             <p class="text-sm font-inter">Italian Mastery</p>
@@ -410,9 +430,11 @@
                     
                     <div class="order-1 lg:order-2 text-white">
                         <div class="flex items-center mb-6">
-                            <div class="w-16 h-16 bg-black border-2 border-white rounded-full flex items-center justify-center mr-4">
-                                <span class="text-white font-bold text-xl">JUV</span>
-                            </div>
+                            <div class="w-16 h-16 rounded-full bg-white flex items-center justify-center mr-4 overflow-hidden">
+                               <img src="https://pub-7b628b0caf204f69816c70b4802e4265.r2.dev/Juventus-logo.png" 
+                                 alt="Juventus" 
+                                 class="w-10 h-10 object-contain">
+                                 </div>
                             <div>
                                 <h2 class="text-4xl md:text-5xl font-playfair font-bold">Juventus</h2>
                                 <p class="text-xl text-gray-300 font-inter">The Challenge • 2018-2021</p>
@@ -460,9 +482,11 @@
                 <div class="grid lg:grid-cols-2 gap-12 items-center">
                     <div class="text-white">
                         <div class="flex items-center mb-6">
-                            <div class="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center mr-4">
-                                <span class="text-white font-bold text-xl">MU</span>
-                            </div>
+                            <div class="w-16 h-16 rounded-full bg-white flex items-center justify-center mr-4 overflow-hidden">
+                              <img src="https://pub-7b628b0caf204f69816c70b4802e4265.r2.dev/Man-u%20logo.png" 
+                                alt="Manchester United" 
+                                 class="w-10 h-10 object-contain">
+                                    </div>
                             <div>
                                 <h2 class="text-4xl md:text-5xl font-playfair font-bold">Manchester United</h2>
                                 <p class="text-xl text-red-200 font-inter">The Return • 2021-2022</p>
@@ -502,7 +526,7 @@
                     </div>
                     
                     <div class="relative">
-                        <img src="https://images.pexels.com/photos/1884574/pexels-photo-1884574.jpeg?auto=compress&cs=tinysrgb&w=2940" alt="Cristiano Ronaldo returns to Manchester United" class="w-full h-96 object-cover rounded-2xl shadow-dramatic" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1584824486509-112e4181ff6b?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'; this.onerror=null;" />
+                        <img src="https://content.api.news/v3/images/bin/55e686ea6b73f3216c4074b547b61093" alt="Cristiano Ronaldo returns to Manchester United" class="w-full h-96 object-cover rounded-2xl shadow-dramatic" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1584824486509-112e4181ff6b?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'; this.onerror=null;" />
                         <div class="absolute -bottom-6 -right-6 bg-accent-600 text-white p-4 rounded-lg shadow-dramatic">
                             <p class="font-playfair font-bold text-lg">Welcome Home</p>
                             <p class="text-sm font-inter">Full Circle</p>
@@ -517,7 +541,7 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="grid lg:grid-cols-2 gap-12 items-center">
                     <div class="order-2 lg:order-1 relative">
-                        <img src="https://images.pixabay.com/photo/2016/06/03/13/57/digital-art-1433427_1280.jpg" alt="Cristiano Ronaldo at Al Nassr" class="w-full h-96 object-cover rounded-2xl shadow-dramatic" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1584824486509-112e4181ff6b?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'; this.onerror=null;" />
+                        <img src="https://ichef.bbci.co.uk/ace/standard/3840/cpsprodpb/ff39/live/1ad14330-51f3-11f0-a905-01a82a8086fe.jpg" alt="Cristiano Ronaldo at Al Nassr" class="w-full h-96 object-cover rounded-2xl shadow-dramatic" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1584824486509-112e4181ff6b?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'; this.onerror=null;" />
                         <div class="absolute -bottom-6 -left-6 bg-yellow-600 text-black p-4 rounded-lg shadow-dramatic">
                             <p class="font-playfair font-bold text-lg">New Horizons</p>
                             <p class="text-sm font-inter">Global Ambassador</p>
@@ -526,9 +550,11 @@
                     
                     <div class="order-1 lg:order-2 text-gray-800">
                         <div class="flex items-center mb-6">
-                            <div class="w-16 h-16 bg-yellow-500 rounded-full flex items-center justify-center mr-4">
-                                <span class="text-black font-bold text-xl">AN</span>
-                            </div>
+                            <div class="w-16 h-16 rounded-full bg-white flex items-center justify-center mr-4 overflow-hidden">
+                              <img src="https://pub-7b628b0caf204f69816c70b4802e4265.r2.dev/Alnassr_FC_Logo.png" 
+                               alt="Al Nassr FC" 
+                                class="w-10 h-10 object-contain">
+                                  </div>
                             <div>
                                 <h2 class="text-4xl md:text-5xl font-playfair font-bold">Al Nassr</h2>
                                 <p class="text-xl text-gray-700 font-inter">New Chapter • 2023-Present</p>
@@ -589,9 +615,9 @@
                 </div>
                 
                 <video id="highlightVideo" class="w-full h-full object-cover hidden" controls>
-                    <source src="https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4" type="video/mp4" />
-                    <p class="text-white">Your browser doesn't support video playback.</p>
-                </video>
+    <source id="videoSource" src="https://pub-7b628b0caf204f69816c70b4802e4265.r2.dev/sporting-highlight.mp4" type="video/mp4" />
+    <p class="text-white">Your browser doesn't support video playback.</p>
+</video>
             </div>
             
             <!-- Video Info -->
@@ -636,7 +662,7 @@
                             <p class="text-xs text-gray-400 font-inter">Years</p>
                         </div>
                         <div class="text-center">
-                            <p class="text-2xl font-playfair font-bold text-primary-400">900+</p>
+                            <p class="text-2xl font-playfair font-bold text-primary-400">946</p>
                             <p class="text-xs text-gray-400 font-inter">Goals</p>
                         </div>
                     </div>
@@ -729,48 +755,82 @@
             const videoTitle = document.getElementById('videoTitle');
             const videoDescription = document.getElementById('videoDescription');
             
-            window.openVideoModal = function(club) {
-                const clubData = {
-                    'sporting': {
-                        title: 'Sporting CP Highlights',
-                        description: 'The beginning of a legendary journey at the José Alvalade Stadium.'
-                    },
-                    'united': {
-                        title: 'Manchester United Glory Days',
-                        description: 'Six incredible years of transformation and triumph at Old Trafford.'
-                    },
-                    'madrid': {
-                        title: 'Real Madrid Masterclass',
-                        description: 'Nine years of unprecedented success at the Santiago Bernabéu.'
-                    },
-                    'juventus': {
-                        title: 'Juventus Excellence',
-                        description: 'Three seasons of Italian mastery and continued brilliance in Turin.'
-                    },
-                    'united-return': {
-                        title: 'Manchester United Return',
-                        description: 'The emotional homecoming that captured hearts worldwide.'
-                    },
-                    'alnassr': {
-                        title: 'Al Nassr New Horizons',
-                        description: 'Breaking new frontiers and inspiring a generation in Saudi Arabia.'
-                    }
-                };
-                
-                const data = clubData[club];
-                videoTitle.textContent = data.title;
-                videoDescription.textContent = data.description;
-                
-                modal.classList.add('active');
-                document.body.style.overflow = 'hidden';
-                
-                // Simulate video loading
-                setTimeout(() => {
-                    loader.classList.add('hidden');
-                    video.classList.remove('hidden');
-                    video.play().catch(e => console.log('Video autoplay prevented'));
-                }, 1500);
-            };
+           window.openVideoModal = function(club) {
+    const clubData = {
+        'sporting': {
+            title: 'Sporting CP Highlights',
+            description: 'The beginning of a legendary journey at the José Alvalade Stadium.',
+            videoUrl: 'https://pub-7b628b0caf204f69816c70b4802e4265.r2.dev/sporting-highlight.mp4'
+        },
+        'united': {
+            title: 'Manchester United Glory Days',
+            description: 'Six incredible years of transformation and triumph at Old Trafford.',
+            videoUrl: 'https://pub-7b628b0caf204f69816c70b4802e4265.r2.dev/Manu-young.mp4'
+        },
+        'madrid': {
+            title: 'Real Madrid Masterclass',
+            description: 'Nine years of unprecedented success at the Santiago Bernabéu.',
+            videoUrl: 'https://pub-7b628b0caf204f69816c70b4802e4265.r2.dev/madrid-high.mp4'
+        },
+        'juventus': {
+            title: 'Juventus Excellence',
+            description: 'Three seasons of Italian mastery and continued brilliance in Turin.',
+            videoUrl: 'https://pub-7b628b0caf204f69816c70b4802e4265.r2.dev/juve-high.mp4'
+        },
+        'united-return': {
+            title: 'Manchester United Return',
+            description: 'The emotional homecoming that captured hearts worldwide.',
+            videoUrl: 'https://pub-7b628b0caf204f69816c70b4802e4265.r2.dev/united-2022.mp4'
+        },
+        'alnassr': {
+            title: 'Al Nassr New Horizons',
+            description: 'Breaking new frontiers and inspiring a generation in Saudi Arabia.',
+            videoUrl: 'https://pub-7b628b0caf204f69816c70b4802e4265.r2.dev/al-nassr.mp4'
+        }
+    };
+
+    const data = clubData[club];
+    if (!data) {
+        console.error("No video data for club:", club);
+        return;
+    }
+
+    // Update title & description
+    videoTitle.textContent = data.title;
+    videoDescription.textContent = data.description;
+
+    // ✅ CRITICAL: Update video source
+    const videoSource = document.getElementById('videoSource');
+    const highlightVideo = document.getElementById('highlightVideo');
+
+    // Only reload if URL changed (optional optimization)
+    if (videoSource.src !== data.videoUrl) {
+        videoSource.src = data.videoUrl;
+        highlightVideo.load(); // Re-load video with new source
+    }
+
+    // Show modal
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+
+    // Show loader, hide video
+    loader.classList.remove('hidden');
+    highlightVideo.classList.add('hidden');
+
+    // Wait for video to be ready (better than fixed timeout)
+    highlightVideo.addEventListener('loadeddata', function onLoaded() {
+        loader.classList.add('hidden');
+        highlightVideo.classList.remove('hidden');
+        highlightVideo.removeEventListener('loadeddata', onLoaded);
+    }, { once: true });
+
+    // Fallback in case 'loadeddata' doesn't fire (e.g., cached)
+    setTimeout(() => {
+        if (!highlightVideo.classList.contains('hidden')) return;
+        loader.classList.add('hidden');
+        highlightVideo.classList.remove('hidden');
+    }, 2000);
+};
             
             function closeVideoModal() {
                 modal.classList.remove('active');
