@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CR7 Legacy - Knowledge Quiz</title>
+    <meta name="description" content="Test your knowledge of Cristiano Ronaldo's legendary career with our interactive CR7 Knowledge Quiz featuring statistics, achievements, and iconic moments." />
+    <link rel="stylesheet" href="../css/main.css" />
+    <style>
+    /* Quiz-specific animations */
+    .quiz-card {
+        transform: translateY(20px);
+        opacity: 0;
+        animation: slideInUp 0.6s ease-out forwards;
+    }
+    
+    .quiz-card.hidden {
+        transform: translateY(-20px);
+        opacity: 0;
+        animation: slideOutUp 0.4s ease-in forwards;
+    }
+    
+    @keyframes slideInUp {
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+    
+    @keyframes slideOutUp {
+        to {
+            transform: translateY(-20px);
+            opacity: 0;
+        }
+    }
+    
+    .progress-bar {
+        background: linear-gradient(90deg, #D4AF37, #FBBF24);
+        border-radius: 10px;
+        height: 8px;
+        transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+    }
+    
+    .answer-option {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        transform: scale(1);
+        /* Touch optimization */
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+        user-select: none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        /* Ensure proper clickable area */
+        position: relative;
+        z-index: 10;
+    }
+    
+    .answer-option:hover {
+        transform: scale(1.02);
+        box-shadow: 0 8px 25px rgba(212, 175, 55, 0.2);
+    }
+    
+    .answer-option:active {
+        transform: scale(0.98);
+    }
+    
+    .answer-option.selected {
+        background: linear-gradient(135deg, #1e40af, #3730a3) !important;
+        border-color: #D4AF37 !important;
+        transform: scale(1.02);
+    }
+    
+    .answer-option.correct {
+        background: linear-gradient(135deg, #059669, #047857) !important;
+        border-color: #10b981 !important;
+        animation: correctPulse 0.6s ease-out;
+    }
+    
+    .answer-option.incorrect {
+        background: linear-gradient(135deg, #dc2626, #b91c1c) !important;
+        border-color: #ef4444 !important;
+        animation: incorrectShake 0.5s ease-out;
+    }
+    
+    .answer-option.feedback-disabled {
+        pointer-events: none !important;
+    }
+    
+    @keyframes correctPulse {
+        0%, 100% { transform: scale(1.02); }
+        50% { transform: scale(1.05); }
+    }
+    
+    @keyframes incorrectShake {
+        0%, 100% { transform: translateX(0) scale(1.02); }
+        25% { transform: translateX(-5px) scale(1.02); }
+        75% { transform: translateX(5px) scale(1.02); }
+    }
+    
+    .score-counter {
+        font-variant-numeric: tabular-nums;
+        animation: countUp 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    @keyframes countUp {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .difficulty-badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+    
+    .difficulty-easy { background: rgba(34, 197, 94, 0.2); color: #22c55e; }
+    .difficulty-medium { background: rgba(251, 191, 36, 0.2); color: #fbbf24; }
+    .difficulty-hard { background: rgba(239, 68, 68, 0.2); color: #ef4444; }
+    .difficulty-expert { background: rgba(147, 51, 234, 0.2); color: #9333ea; }
+    
+    .result-animation {
+        animation: resultReveal 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    @keyframes resultReveal {
+        0% { opacity: 0; transform: scale(0.8) translateY(30px); }
+        60% { opacity: 1; transform: scale(1.05) translateY(-5px); }
+        100% { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    
+    .celebration-confetti {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        background: #D4AF37;
+        border-radius: 50%;
+        animation: confetti 3s ease-out infinite;
+    }
+    
+    @keyframes confetti {
+        0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+        100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
+    }
+    
+    .social-share-btn {
+        background: linear-gradient(135deg, #1DA1F2, #0d8bd9);
+        transition: all 0.3s ease;
+    }
+    
+    .social-share-btn:hover {
+        background: linear-gradient(135deg, #0d8bd9, #0a73c2);
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(29, 161, 242, 0.3);
+    }
+    
+    /* Button touch optimization */
+    .difficulty-selector {
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+        user-select: none;
+        -webkit-user-select: none;
+    }
+    
+    /* Ensure proper spacing for touch targets */
+    @media (max-width: 768px) {
+        .answer-option {
+            min-height: 60px;
+            margin-bottom: 16px;
+        }
+        
+        .difficulty-selector {
+            min-height: 48px;
+            padding: 12px 20px;
+        }
+    }
+</style>
+<script type="module" src="https://static.rocket.new/rocket-web.js?_cfg=https%3A%2F%2Fcr7legacy3967back.builtwithrocket.new&_be=https%3A%2F%2Fapplication.rocket.new&_v=0.1.8"></script>
+</head>
+<body class="bg-gradient-to-br from-secondary-900 via-secondary-800 to-secondary-700 min-h-screen">
+    <!-- Navigation Header -->
+    <nav class="relative z-20 bg-black bg-opacity-20 backdrop-blur-sm border-b border-primary-500 border-opacity-30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <svg class="w-10 h-10 text-primary-500" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2L13.09 8.26L20 9L13.09 9.74L12 16L10.91 9.74L4 9L10.91 8.26L12 2Z"/>
+                    </svg>
+                    <span class="ml-3 text-xl font-playfair font-bold text-white">CR7 Legacy</span>
+                </div>
+                
+                <!-- Navigation Links -->
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="interactive_landing.html" class="text-white hover:text-primary-300 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">Landing</a>
+                        <a href="hero_tribute.html" class="text-white hover:text-primary-300 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">Tribute</a>
+                        <a href="club_journey.html" class="text-white hover:text-primary-300 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">Journey</a>
+                        <a href="statistical_monument.html" class="text-white hover:text-primary-300 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">Stats</a>
+                        <a href="goals_gallery.html" class="text-white hover:text-primary-300 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">Gallery</a>
+                        <a href="cr7_knowledge_quiz.html" class="text-primary-400 hover:text-primary-300 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 border-b-2 border-primary-500">Quiz</a>
+                    </div>
+                </div>
+                
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button id="mobileMenuBtn" class="text-white hover:text-primary-300 focus:outline-none focus:text-primary-300">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile menu -->
+        <div id="mobileMenu" class="md:hidden hidden bg-black bg-opacity-40 backdrop-blur-sm">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="interactive_landing.html" class="text-white hover:text-primary-300 block px-3 py-2 rounded-md text-base font-medium">Landing</a>
+                <a href="hero_tribute.html" class="text-white hover:text-primary-300 block px-3 py-2 rounded-md text-base font-medium">Tribute</a>
+                <a href="club_journey.html" class="text-white hover:text-primary-300 block px-3 py-2 rounded-md text-base font-medium">Journey</a>
+                <a href="statistical_monument.html" class="text-white hover:text-primary-300 block px-3 py-2 rounded-md text-base font-medium">Stats</a>
+                <a href="goals_gallery.html" class="text-white hover:text-primary-300 block px-3 py-2 rounded-md text-base font-medium">Gallery</a>
+                <a href="cr7_knowledge_quiz.html" class="text-primary-400 block px-3 py-2 rounded-md text-base font-medium border-l-4 border-primary-500">Quiz</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Quiz Container -->
+    <main class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Quiz Header -->
+        <div class="text-center mb-12">
+            <div class="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-primary-400 to-primary-600 rounded-full mb-6 shadow-dramatic">
+                <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M9.5 16.5c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5-.67-1.5-1.5-1.5-1.5.67-1.5 1.5zM6.5 12.5c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5S8.83 11 8 11s-1.5.67-1.5 1.5zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8 0-1.85.63-3.55 1.69-4.9L16.9 18.31C15.55 19.37 13.85 20 12 20zm6.31-3.1L7.1 5.69C8.45 4.63 10.15 4 12 4c4.41 0 8 3.59 8 8 0 1.85-.63 3.55-1.69 4.9z"/>
+                </svg>
+            </div>
+            <h1 class="text-4xl sm:text-5xl font-oswald font-bold text-white mb-4">
+                CR7 Knowledge <span class="text-primary-400">Quiz</span>
+            </h1>
+            <p class="text-xl text-gray-300 font-inter max-w-2xl mx-auto">
+                Test your knowledge of Cristiano Ronaldo's legendary career, achievements, and records
+            </p>
+        </div>
+
+        <!-- Quiz Progress -->
+        <div id="quizProgress" class="mb-8 bg-black bg-opacity-30 backdrop-blur-sm rounded-2xl p-6 border border-primary-500 border-opacity-20">
+            <div class="flex justify-between items-center mb-4">
+                <div class="flex items-center space-x-4">
+                    <span class="text-white font-inter font-medium">Progress</span>
+                    <span id="questionCounter" class="text-primary-400 font-oswald text-lg">1 / 10</span>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <span class="text-white font-inter font-medium">Score</span>
+                    <span id="currentScore" class="text-primary-400 font-oswald text-lg score-counter">0</span>
+                </div>
+            </div>
+            <div class="w-full bg-gray-700 rounded-full h-2">
+                <div id="progressBar" class="progress-bar w-[10%]"></div>
+            </div>
+        </div>
+
+        <!-- Quiz Card Container -->
+        <div id="quizContainer" class="quiz-card bg-black bg-opacity-40 backdrop-blur-sm rounded-2xl border border-primary-500 border-opacity-20 overflow-hidden shadow-dramatic">
+            <!-- Welcome Screen -->
+            <div id="welcomeScreen" class="p-8 text-center">
+                <div class="mb-8">
+                    <img src="https://ih1.redbubble.net/image.381798608.8132/flat,750x,075,f-pad,750x1000,f8f8f8.u3.jpg" alt="Cristiano Ronaldo" class="w-32 h-32 rounded-full mx-auto mb-6 border-4 border-primary-500 shadow-dramatic object-cover" />
+                </div>
+                
+                <h2 class="text-3xl font-oswald font-bold text-white mb-4">Welcome to the Ultimate CR7 Quiz!</h2>
+                <p class="text-gray-300 font-inter mb-8 max-w-2xl mx-auto">
+                    Put your knowledge to the test with questions covering Cristiano's entire career, 
+                    from his early days in Madeira to becoming the GOAT. Are you ready to prove you're a true CR7 fan?
+                </p>
+                
+                <div class="flex flex-col sm:flex-row gap-4 justify-center mb-6">
+                    <button id="startEasyQuiz" class="difficulty-selector bg-green-600 hover:bg-green-500 text-white px-8 py-3 rounded-lg font-inter font-medium transition-all duration-300 transform hover:scale-105" data-difficulty="easy">
+                        <span class="difficulty-badge difficulty-easy mr-2">Easy</span>
+                        Casual Fan
+                    </button>
+                    <button id="startMediumQuiz" class="difficulty-selector bg-yellow-600 hover:bg-yellow-500 text-white px-8 py-3 rounded-lg font-inter font-medium transition-all duration-300 transform hover:scale-105" data-difficulty="medium">
+                        <span class="difficulty-badge difficulty-medium mr-2">Medium</span>
+                        True Supporter
+                    </button>
+                    <button id="startHardQuiz" class="difficulty-selector bg-red-600 hover:bg-red-500 text-white px-8 py-3 rounded-lg font-inter font-medium transition-all duration-300 transform hover:scale-105" data-difficulty="hard">
+                        <span class="difficulty-badge difficulty-hard mr-2">Hard</span>
+                        Super Fan
+                    </button>
+                    <button id="startExpertQuiz" class="difficulty-selector bg-purple-600 hover:bg-purple-500 text-white px-8 py-3 rounded-lg font-inter font-medium transition-all duration-300 transform hover:scale-105" data-difficulty="expert">
+                        <span class="difficulty-badge difficulty-expert mr-2">Expert</span>
+                        GOAT Level
+                    </button>
+                </div>
+            </div>
+
+            <!-- Quiz Question Screen -->
+            <div id="questionScreen" class="hidden p-8">
+                <div class="mb-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <span id="difficultyBadge" class="difficulty-badge difficulty-easy">Easy</span>
+                        <span id="questionNumber" class="text-primary-400 font-oswald text-lg">Question 1</span>
+                    </div>
+                    <h3 id="questionText" class="text-2xl font-oswald font-bold text-white mb-2"></h3>
+                    <p id="questionContext" class="text-gray-300 font-inter text-sm"></p>
+                </div>
+
+                <div id="questionImage" class="mb-6 hidden">
+                    <img id="contextImage" src alt class="w-full h-48 object-cover rounded-lg border-2 border-primary-500 border-opacity-30" />
+                </div>
+
+                <div id="answersContainer" class="space-y-4 mb-8">
+                    <!-- Answer options will be populated by JavaScript -->
+                </div>
+
+                <div class="flex justify-between">
+                    <button id="prevQuestion" class="bg-secondary-700 hover:bg-secondary-600 text-white px-6 py-2 rounded-lg font-inter font-medium transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed">
+                        Previous
+                    </button>
+                    <button id="nextQuestion" class="bg-primary-600 hover:bg-primary-500 text-white px-6 py-2 rounded-lg font-inter font-medium transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed">
+                        Next Question
+                    </button>
+                </div>
+            </div>
+
+            <!-- Quiz Results Screen -->
+            <div id="resultsScreen" class="hidden p-8 text-center">
+                <div id="confettiContainer" class="fixed inset-0 pointer-events-none z-50"></div>
+                
+                <div class="result-animation">
+                    <div id="resultBadge" class="inline-flex items-center justify-center w-24 h-24 rounded-full mb-6 shadow-dramatic">
+                        <svg class="w-12 h-12 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                        </svg>
+                    </div>
+                    
+                    <h2 id="resultTitle" class="text-4xl font-oswald font-bold text-white mb-4"></h2>
+                    <p id="resultDescription" class="text-xl text-gray-300 font-inter mb-6"></p>
+                    
+                    <div class="bg-black bg-opacity-30 rounded-xl p-6 mb-6">
+                        <div class="grid grid-cols-2 gap-6">
+                            <div class="text-center">
+                                <span id="finalScore" class="text-4xl font-oswald font-bold text-primary-400">8/10</span>
+                                <p class="text-gray-300 font-inter mt-1">Final Score</p>
+                            </div>
+                            <div class="text-center">
+                                <span id="accuracyPercentage" class="text-4xl font-oswald font-bold text-primary-400">80%</span>
+                                <p class="text-gray-300 font-inter mt-1">Accuracy</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                        <button id="retakeQuiz" class="bg-primary-600 hover:bg-primary-500 text-white px-8 py-3 rounded-lg font-inter font-medium transition-all duration-300 transform hover:scale-105">
+                            Take Quiz Again
+                        </button>
+                        <button id="shareResults" class="social-share-btn text-white px-8 py-3 rounded-lg font-inter font-medium">
+                            Share Results
+                        </button>
+                        <a href="interactive_landing.html" class="bg-secondary-700 hover:bg-secondary-600 text-white px-8 py-3 rounded-lg font-inter font-medium transition-all duration-300 transform hover:scale-105 inline-block">
+                            Back to Home
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+    class CR7Quiz {
+        constructor() {
+            this.questions = {
+                easy: [
+                    {
+                        question: "In which country was Cristiano Ronaldo born?",
+                        context: "CR7's humble beginnings shaped his legendary journey",
+                        answers: ["Portugal", "Spain", "Brazil", "Argentina"],
+                        correct: 0,
+                        image: "https://images.unsplash.com/photo-1539037116277-4db20889f2d4?w=400&h=200&fit=crop"
+                    },
+                    {
+                        question: "What is Cristiano Ronaldo's famous celebration called?",
+                        context: "This celebration became a global phenomenon",
+                        answers: ["SIUUU", "Calm", "Shhh", "Jump"],
+                        correct: 0
+                    },
+                    {
+                        question: "Which club did CR7 join when he first moved to England?",
+                        context: "His Premier League adventure began here",
+                        answers: ["Liverpool", "Chelsea", "Arsenal", "Manchester United"],
+                        correct: 3,
+                        image: "https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=400&h=200&fit=crop"
+                    },
+                    {
+                        question: "How many Ballon d'Or awards has Cristiano won?",
+                        context: "Individual excellence recognized at the highest level",
+                        answers: ["3", "4", "5", "6"],
+                        correct: 2
+                    },
+                    {
+                        question: "What jersey number does CR7 typically wear?",
+                        context: "This number became synonymous with greatness",
+                        answers: ["9", "10", "7", "11"],
+                        correct: 2
+                    },
+                    {
+                        question: "Which Spanish club did Ronaldo play for?",
+                        context: "Where he became a Galáctico",
+                        answers: ["Barcelona", "Real Madrid", "Atletico Madrid", "Valencia"],
+                        correct: 1,
+                        image: "https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=400&h=200&fit=crop"
+                    },
+                    {
+                        question: "True or False: Cristiano has played in 5 World Cups",
+                        context: "World Cup appearances spanning multiple generations",
+                        answers: ["True", "False"],
+                        correct: 0
+                    },
+                    {
+                        question: "What position does CR7 primarily play?",
+                        context: "His versatility across the front line",
+                        answers: ["Goalkeeper", "Defender", "Forward", "Midfielder"],
+                        correct: 2
+                    },
+                    {
+                        question: "Which Italian club did Ronaldo join in 2018?",
+                        context: "His Serie A adventure",
+                        answers: ["AC Milan", "Inter Milan", "Juventus", "Roma"],
+                        correct: 2
+                    },
+                    {
+                        question: "What is CR7's full name?",
+                        context: "Named after a US President",
+                        answers: ["Cristiano Ronaldo", "Cristiano Ronaldo Santos", "Cristiano Ronaldo dos Santos Aveiro", "Cristiano dos Santos"],
+                        correct: 2
+                    }
+                ],
+                medium: [
+                    {
+                        question: "How many goals did CR7 score in his final season at Real Madrid?",
+                        context: "His farewell season in the white shirt",
+                        answers: ["42", "44", "46", "48"],
+                        correct: 1
+                    },
+                    {
+                        question: "Which manager gave Cristiano his first team debut at Sporting CP?",
+                        context: "The man who launched a legend's career",
+                        answers: ["José Mourinho", "Carlos Queiroz", "László Bölöni", "Fernando Santos"],
+                        correct: 2
+                    },
+                    {
+                        question: "In which year did CR7 score his famous bicycle kick against Juventus?",
+                        context: "A goal that earned applause from opposing fans",
+                        answers: ["2017", "2018", "2019", "2020"],
+                        correct: 1,
+                        image: "https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=400&h=200&fit=crop"
+                    },
+                    {
+                        question: "How many Champions League titles did Ronaldo win with Real Madrid?",
+                        context: "European dominance in the white shirt",
+                        answers: ["3", "4", "5", "6"],
+                        correct: 1
+                    },
+                    {
+                        question: "What was CR7's jersey number at Sporting CP?",
+                        context: "Before he became CR7",
+                        answers: ["17", "28", "23", "18"],
+                        correct: 1
+                    },
+                    {
+                        question: "Which country did Portugal defeat in the 2016 Euro final?",
+                        context: "CR7's first major tournament victory with Portugal",
+                        answers: ["Germany", "Spain", "France", "Italy"],
+                        correct: 2
+                    },
+                    {
+                        question: "How much did Real Madrid pay for Cristiano in 2009?",
+                        context: "A then world record transfer fee",
+                        answers: ["€80 million", "€94 million", "€100 million", "€120 million"],
+                        correct: 1
+                    },
+                    {
+                        question: "In which stadium did CR7 score his 700th career goal?",
+                        context: "A milestone achievement",
+                        answers: ["Old Trafford", "Santiago Bernabéu", "Stadium of Light", "Allianz Stadium"],
+                        correct: 2
+                    },
+                    {
+                        question: "True or False: Cristiano has scored in every minute of a football match",
+                        context: "His incredible goal-scoring distribution",
+                        answers: ["True", "False"],
+                        correct: 0
+                    },
+                    {
+                        question: "Which team eliminated Portugal from the 2022 World Cup?",
+                        context: "The end of a World Cup dream",
+                        answers: ["Spain", "France", "Morocco", "Brazil"],
+                        correct: 2
+                    }
+                ],
+                hard: [
+                    {
+                        question: "How many free-kick goals did CR7 score in La Liga?",
+                        context: "His free-kick prowess in Spanish football",
+                        answers: ["32", "35", "38", "41"],
+                        correct: 0
+                    },
+                    {
+                        question: "Against which team did Ronaldo score his first Manchester United hat-trick?",
+                        context: "A memorable treble in his early United days",
+                        answers: ["Newcastle United", "Tottenham", "Portsmouth", "Blackburn Rovers"],
+                        correct: 0
+                    },
+                    {
+                        question: "What was CR7's exact transfer fee to Juventus in 2018?",
+                        context: "The precise amount for the Galáctico's move to Italy",
+                        answers: ["€100 million", "€112 million", "€117 million", "€125 million"],
+                        correct: 2
+                    },
+                    {
+                        question: "How many goals did Ronaldo score in the 2017/18 Champions League campaign?",
+                        context: "His record-breaking European campaign",
+                        answers: ["15", "17", "19", "21"],
+                        correct: 0
+                    },
+                    {
+                        question: "Which goalkeeper has CR7 scored the most goals against?",
+                        context: "His favorite opponent between the posts",
+                        answers: ["Gianluigi Buffon", "Diego López", "Jan Oblak", "Petr Čech"],
+                        correct: 1
+                    },
+                    {
+                        question: "In which year did Cristiano first reach 50 goals in a calendar year?",
+                        context: "The beginning of his goal-scoring dominance",
+                        answers: ["2008", "2010", "2011", "2012"],
+                        correct: 2
+                    },
+                    {
+                        question: "How many goals did CR7 score in his debut season at Real Madrid?",
+                        context: "His explosive first year in Madrid",
+                        answers: ["31", "33", "35", "38"],
+                        correct: 1
+                    },
+                    {
+                        question: "Against which team did Ronaldo score his 100th international goal?",
+                        context: "Reaching the century mark for Portugal",
+                        answers: ["Luxembourg", "Sweden", "Lithuania", "Latvia"],
+                        correct: 1
+                    },
+                    {
+                        question: "What was CR7's fastest goal in a Champions League match?",
+                        context: "Lightning-quick European strike",
+                        answers: ["67 seconds", "73 seconds", "81 seconds", "95 seconds"],
+                        correct: 0
+                    },
+                    {
+                        question: "How many different competitions has Ronaldo scored in for Real Madrid?",
+                        context: "His versatility across all tournaments",
+                        answers: ["12", "14", "16", "18"],
+                        correct: 1
+                    }
+                ],
+                expert: [
+                    {
+                        question: "What was CR7's exact sprint speed during his fastest recorded run?",
+                        context: "Peak physical performance measurement",
+                        answers: ["33.6 km/h", "34.2 km/h", "35.1 km/h", "36.0 km/h"],
+                        correct: 0
+                    },
+                    {
+                        question: "How many times has Ronaldo scored exactly 61 goals in a calendar year?",
+                        context: "Precise statistical achievement frequency",
+                        answers: ["0", "1", "2", "3"],
+                        correct: 1
+                    },
+                    {
+                        question: "What was CR7's shooting accuracy percentage in the 2016/17 Champions League?",
+                        context: "Statistical precision in Europe's elite competition",
+                        answers: ["64.2%", "67.8%", "71.3%", "74.1%"],
+                        correct: 2
+                    },
+                    {
+                        question: "Against which goalkeeper did Ronaldo have his highest conversion rate?",
+                        context: "Statistical dominance against specific opponents",
+                        answers: ["Victor Valdés", "Pepe Reina", "Iker Casillas", "David de Gea"],
+                        correct: 1
+                    },
+                    {
+                        question: "How many goals did CR7 score in injury time throughout his Real Madrid career?",
+                        context: "Clutch performance in crucial moments",
+                        answers: ["23", "27", "31", "35"],
+                        correct: 1
+                    },
+                    {
+                        question: "What was Ronaldo's exact aerial duel success rate in the 2018 World Cup?",
+                        context: "Precise aerial dominance statistics",
+                        answers: ["68.4%", "71.2%", "73.8%", "76.5%"],
+                        correct: 2
+                    },
+                    {
+                        question: "How many successful step-overs did CR7 complete in the 2017/18 season?",
+                        context: "Technical skill execution frequency",
+                        answers: ["187", "203", "219", "234"],
+                        correct: 1
+                    },
+                    {
+                        question: "What was CR7's exact penalty conversion rate at Juventus?",
+                        context: "Spot-kick precision in Turin",
+                        answers: ["84.6%", "87.3%", "89.1%", "91.7%"],
+                        correct: 2
+                    },
+                    {
+                        question: "How many times did Ronaldo hit the woodwork in the 2019/20 season?",
+                        context: "Near-miss statistical analysis",
+                        answers: ["11", "13", "15", "17"],
+                        correct: 1
+                    },
+                    {
+                        question: "What was CR7's average distance covered per match in the 2020/21 season?",
+                        context: "Physical performance metrics",
+                        answers: ["9.2 km", "9.7 km", "10.1 km", "10.6 km"],
+                        correct: 1
+                    }
+                ]
+            };
+            
+            this.currentQuestions = [];
+            this.currentQuestionIndex = 0;
+            this.score = 0;
+            this.selectedAnswers = [];
+            this.difficulty = 'easy';
+            this.startTime = 0;
+            this.isProcessingAnswer = false; // Prevent multiple clicks
+            this.feedbackTimeout = null; // Store timeout reference
+            
+            this.initializeQuiz();
+        }
+        
+        initializeQuiz() {
+            this.bindEvents();
+            this.hideAllScreens();
+            document.getElementById('welcomeScreen').classList.remove('hidden');
+        }
+        
+        bindEvents() {
+            // Enhanced difficulty selection with debouncing
+            document.querySelectorAll('.difficulty-selector').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    if (!this.isProcessingAnswer) {
+                        this.startQuiz(e.currentTarget.dataset.difficulty);
+                    }
+                }, { passive: false });
+            });
+            
+            // Navigation buttons with proper event handling
+            const nextBtn = document.getElementById('nextQuestion');
+            const prevBtn = document.getElementById('prevQuestion');
+            const retakeBtn = document.getElementById('retakeQuiz');
+            const shareBtn = document.getElementById('shareResults');
+            
+            nextBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                this.nextQuestion();
+            });
+            
+            prevBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                this.prevQuestion();
+            });
+            
+            retakeBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                this.resetQuiz();
+            });
+            
+            shareBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                this.shareResults();
+            });
+            
+            // Mobile menu
+            document.getElementById('mobileMenuBtn').addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                document.getElementById('mobileMenu').classList.toggle('hidden');
+            });
+            
+            // Keyboard navigation
+            document.addEventListener('keydown', (e) => {
+                if (this.isProcessingAnswer) return;
+                
+                if (e.key === 'ArrowRight') {
+                    e.preventDefault();
+                    this.nextQuestion();
+                }
+                if (e.key === 'ArrowLeft') {
+                    e.preventDefault();
+                    this.prevQuestion();
+                }
+                if (e.key >= '1' && e.key <= '4') {
+                    e.preventDefault();
+                    const answerIndex = parseInt(e.key) - 1;
+                    const answerOption = document.querySelectorAll('.answer-option')[answerIndex];
+                    if (answerOption && !answerOption.classList.contains('feedback-disabled')) {
+                        this.selectAnswer(answerOption);
+                    }
+                }
+            });
+        }
+        
+        startQuiz(difficulty) {
+            if (!difficulty) return;
+            
+            this.difficulty = difficulty;
+            this.currentQuestions = this.shuffleArray([...this.questions[difficulty]]);
+            this.currentQuestionIndex = 0;
+            this.score = 0;
+            this.selectedAnswers = [];
+            this.startTime = Date.now();
+            this.isProcessingAnswer = false;
+            
+            this.hideAllScreens();
+            document.getElementById('questionScreen').classList.remove('hidden');
+            document.getElementById('quizProgress').classList.remove('hidden');
+            
+            this.loadQuestion();
+            this.updateProgress();
+        }
+        
+        loadQuestion() {
+            const question = this.currentQuestions[this.currentQuestionIndex];
+            const difficultyBadge = document.getElementById('difficultyBadge');
+            
+            // Clear any existing feedback timeout
+            if (this.feedbackTimeout) {
+                clearTimeout(this.feedbackTimeout);
+                this.feedbackTimeout = null;
+            }
+            
+            this.isProcessingAnswer = false;
+            
+            // Set difficulty badge
+            difficultyBadge.className = `difficulty-badge difficulty-${this.difficulty}`;
+            difficultyBadge.textContent = this.difficulty.charAt(0).toUpperCase() + this.difficulty.slice(1);
+            
+            // Set question content
+            document.getElementById('questionNumber').textContent = `Question ${this.currentQuestionIndex + 1}`;
+            document.getElementById('questionText').textContent = question.question;
+            document.getElementById('questionContext').textContent = question.context;
+            
+            // Handle question image
+            if (question.image) {
+                document.getElementById('questionImage').classList.remove('hidden');
+                document.getElementById('contextImage').src = question.image;
+            } else {
+                document.getElementById('questionImage').classList.add('hidden');
+            }
+            
+            // Generate answer options
+            this.generateAnswerOptions(question);
+            
+            // Update navigation buttons
+            document.getElementById('prevQuestion').disabled = this.currentQuestionIndex === 0;
+            document.getElementById('nextQuestion').textContent = 
+                this.currentQuestionIndex === this.currentQuestions.length - 1 ? 'Finish Quiz' : 'Next Question';
+        }
+        
+        generateAnswerOptions(question) {
+            const container = document.getElementById('answersContainer');
+            container.innerHTML = '';
+            
+            question.answers.forEach((answer, index) => {
+                const option = document.createElement('div');
+                option.className = 'answer-option bg-secondary-800 hover:bg-secondary-700 border-2 border-transparent rounded-xl p-4 cursor-pointer transition-all duration-300';
+                option.dataset.index = index;
+                option.setAttribute('role', 'button');
+                option.setAttribute('tabindex', '0');
+                option.setAttribute('aria-label', `Option ${String.fromCharCode(65 + index)}: ${answer}`);
+                
+                option.innerHTML = `
+                    <div class="flex items-center space-x-4">
+                        <div class="w-8 h-8 rounded-full bg-primary-600 flex items-center justify-center text-white font-oswald font-medium">
+                            ${String.fromCharCode(65 + index)}
+                        </div>
+                        <span class="text-white font-inter text-lg">${answer}</span>
+                    </div>
+                `;
+                
+                // Enhanced event handling for better touch response
+                option.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    if (!this.isProcessingAnswer && !option.classList.contains('feedback-disabled')) {
+                        this.selectAnswer(option);
+                    }
+                }, { passive: false });
+                
+                // Touch event optimization
+                option.addEventListener('touchstart', (e) => {
+                    e.preventDefault();
+                    option.style.transform = 'scale(0.98)';
+                }, { passive: false });
+                
+                option.addEventListener('touchend', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    option.style.transform = '';
+                    if (!this.isProcessingAnswer && !option.classList.contains('feedback-disabled')) {
+                        this.selectAnswer(option);
+                    }
+                }, { passive: false });
+                
+                // Keyboard accessibility
+                option.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        if (!this.isProcessingAnswer && !option.classList.contains('feedback-disabled')) {
+                            this.selectAnswer(option);
+                        }
+                    }
+                });
+                
+                container.appendChild(option);
+            });
+            
+            // Restore previous selection if exists
+            if (this.selectedAnswers[this.currentQuestionIndex] !== undefined) {
+                const selectedOption = container.children[this.selectedAnswers[this.currentQuestionIndex]];
+                if (selectedOption) {
+                    selectedOption.classList.add('selected');
+                }
+            }
+        }
+        
+        selectAnswer(option) {
+            if (this.isProcessingAnswer || option.classList.contains('feedback-disabled')) {
+                return;
+            }
+            
+            // Remove previous selection
+            document.querySelectorAll('.answer-option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            
+            // Add selection to clicked option
+            option.classList.add('selected');
+            
+            // Store answer
+            const answerIndex = parseInt(option.dataset.index);
+            this.selectedAnswers[this.currentQuestionIndex] = answerIndex;
+            
+            // Enable next button
+            document.getElementById('nextQuestion').disabled = false;
+            
+            // Provide visual feedback
+            option.style.transform = 'scale(1.02)';
+            setTimeout(() => {
+                if (option.style) {
+                    option.style.transform = '';
+                }
+            }, 150);
+        }
+        
+        nextQuestion() {
+            if (this.isProcessingAnswer) {
+                return;
+            }
+            
+            if (this.selectedAnswers[this.currentQuestionIndex] === undefined) {
+                this.showNotification('Please select an answer before proceeding', 'warning');
+                return;
+            }
+            
+            this.isProcessingAnswer = true;
+            this.showAnswerFeedback();
+            
+            this.feedbackTimeout = setTimeout(() => {
+                if (this.currentQuestionIndex < this.currentQuestions.length - 1) {
+                    this.currentQuestionIndex++;
+                    this.loadQuestion();
+                    this.updateProgress();
+                } else {
+                    this.finishQuiz();
+                }
+                this.isProcessingAnswer = false;
+            }, 1500);
+        }
+        
+        prevQuestion() {
+            if (this.isProcessingAnswer) {
+                return;
+            }
+            
+            if (this.currentQuestionIndex > 0) {
+                this.currentQuestionIndex--;
+                this.loadQuestion();
+                this.updateProgress();
+            }
+        }
+        
+        showAnswerFeedback() {
+            const question = this.currentQuestions[this.currentQuestionIndex];
+            const selectedIndex = this.selectedAnswers[this.currentQuestionIndex];
+            const options = document.querySelectorAll('.answer-option');
+            
+            options.forEach((option, index) => {
+                option.classList.add('feedback-disabled');
+                
+                if (index === question.correct) {
+                    option.classList.add('correct');
+                } else if (index === selectedIndex && index !== question.correct) {
+                    option.classList.add('incorrect');
+                }
+            });
+            
+            if (selectedIndex === question.correct) {
+                this.score++;
+                this.updateScore();
+            }
+        }
+        
+        updateProgress() {
+            const progress = ((this.currentQuestionIndex + 1) / this.currentQuestions.length) * 100;
+            document.getElementById('progressBar').style.width = `${progress}%`;
+            document.getElementById('questionCounter').textContent = `${this.currentQuestionIndex + 1} / ${this.currentQuestions.length}`;
+        }
+        
+        updateScore() {
+            document.getElementById('currentScore').textContent = this.score;
+        }
+        
+        finishQuiz() {
+            const accuracy = Math.round((this.score / this.currentQuestions.length) * 100);
+            const timeElapsed = Math.round((Date.now() - this.startTime) / 1000);
+            
+            this.hideAllScreens();
+            document.getElementById('resultsScreen').classList.remove('hidden');
+            document.getElementById('quizProgress').classList.add('hidden');
+            
+            // Show results with animation
+            this.showResults(accuracy, timeElapsed);
+            
+            // Trigger confetti if high score
+            if (accuracy >= 80) {
+                this.createConfetti();
+            }
+        }
+        
+        showResults(accuracy, timeElapsed) {
+            const resultBadge = document.getElementById('resultBadge');
+            const resultTitle = document.getElementById('resultTitle');
+            const resultDescription = document.getElementById('resultDescription');
+            
+            let classification, badgeClass, description;
+            
+            if (accuracy >= 90) {
+                classification = "GOAT Level";
+                badgeClass = "bg-gradient-to-br from-yellow-400 to-yellow-600";
+                description = "Outstanding! You know CR7 better than most commentators!";
+            } else if (accuracy >= 80) {
+                classification = "Club Legend";
+                badgeClass = "bg-gradient-to-br from-primary-400 to-primary-600";
+                description = "Excellent! You're a true CR7 connoisseur!";
+            } else if (accuracy >= 60) {
+                classification = "Rising Star";
+                badgeClass = "bg-gradient-to-br from-blue-400 to-blue-600";
+                description = "Good job! Your CR7 knowledge is solid!";
+            } else {
+                classification = "Rookie Fan";
+                badgeClass = "bg-gradient-to-br from-gray-400 to-gray-600";
+                description = "Keep learning! Every GOAT fan starts somewhere!";
+            }
+            
+            resultBadge.className = `inline-flex items-center justify-center w-24 h-24 rounded-full mb-6 shadow-dramatic ${badgeClass}`;
+            resultTitle.textContent = classification;
+            resultDescription.textContent = description;
+            
+            document.getElementById('finalScore').textContent = `${this.score}/${this.currentQuestions.length}`;
+            document.getElementById('accuracyPercentage').textContent = `${accuracy}%`;
+        }
+        
+        createConfetti() {
+            const container = document.getElementById('confettiContainer');
+            const colors = ['#D4AF37', '#FBBF24', '#3B82F6', '#EF4444', '#10B981'];
+            
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'celebration-confetti';
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.animationDelay = Math.random() * 3 + 's';
+                container.appendChild(confetti);
+                
+                setTimeout(() => confetti.remove(), 3000);
+            }
+        }
+        
+        shareResults() {
+            const accuracy = Math.round((this.score / this.currentQuestions.length) * 100);
+            const text = `I just scored ${this.score}/${this.currentQuestions.length} (${accuracy}%) on the CR7 Knowledge Quiz! Test your knowledge of Cristiano Ronaldo's legendary career! 🐐⚽ #CR7Quiz #GOAT`;
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: 'CR7 Knowledge Quiz Results',
+                    text: text,
+                    url: window.location.href
+                });
+            } else {
+                navigator.clipboard.writeText(text + ' ' + window.location.href);
+                this.showNotification('Results copied to clipboard!', 'success');
+            }
+        }
+        
+        resetQuiz() {
+            // Clear any existing timeouts
+            if (this.feedbackTimeout) {
+                clearTimeout(this.feedbackTimeout);
+                this.feedbackTimeout = null;
+            }
+            
+            this.isProcessingAnswer = false;
+            this.hideAllScreens();
+            document.getElementById('welcomeScreen').classList.remove('hidden');
+            document.getElementById('quizProgress').classList.remove('hidden');
+            this.currentQuestionIndex = 0;
+            this.score = 0;
+            this.selectedAnswers = [];
+            this.updateProgress();
+            this.updateScore();
+        }
+        
+        hideAllScreens() {
+            document.getElementById('welcomeScreen').classList.add('hidden');
+            document.getElementById('questionScreen').classList.add('hidden');
+            document.getElementById('resultsScreen').classList.add('hidden');
+        }
+        
+        showNotification(message, type = 'info') {
+            // Remove any existing notifications
+            const existingNotifications = document.querySelectorAll('.quiz-notification');
+            existingNotifications.forEach(notification => notification.remove());
+            
+            // Create new notification
+            const notification = document.createElement('div');
+            notification.className = `quiz-notification fixed top-4 right-4 z-50 p-4 rounded-lg text-white font-inter ${
+                type === 'success' ? 'bg-green-600' : 
+                type === 'warning' ? 'bg-yellow-600' : 'bg-blue-600'
+            }`;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => notification.remove(), 3000);
+        }
+        
+        shuffleArray(array) {
+            const shuffled = [...array];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        }
+    }
+    
+    // Initialize the quiz when DOM is loaded
+    document.addEventListener('DOMContentLoaded', () => {
+        new CR7Quiz();
+    });
+</script>
+<script id="dhws-dataInjector" src="../public/dhws-data-injector.js"></script>
+</body>
+</html>
